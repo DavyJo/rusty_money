@@ -136,5 +136,5 @@ rate.convert(&Money::from_minor(100_000, iso::USD));                    // 500 E
 // An Exchange can be used to store ExchangeRates for later use
 let mut exchange = Exchange::new();
 exchange.set_rate(&rate);
-exchange.get_rate(iso::USD, iso::EUR);
+exchange.get_rate(&iso::USD, &iso::EUR);
 ```

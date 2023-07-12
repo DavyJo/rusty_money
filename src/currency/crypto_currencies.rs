@@ -1,10 +1,10 @@
 use crate::define_currency_set;
 
 define_currency_set!(
-    /// Crypto Currency Set
+        /// Crypto Currency Set
     crypto {
-        BTC: {
-            code: "BTC",
+            BTC: {
+                code: "BTC",
             exponent: 8,
             locale: EnUs,
             minor_units: 100_000_000,
@@ -13,7 +13,7 @@ define_currency_set!(
             symbol_first: true,
         },
         COMP: {
-            code: "COMP",
+                code: "COMP",
             exponent: 18,
             locale: EnUs,
             minor_units: 1_000_000_000_000_000_000,
@@ -22,7 +22,7 @@ define_currency_set!(
             symbol_first: false,
         },
         DAI: {
-            code: "DAI",
+                code: "DAI",
             exponent: 18,
             locale: EnUs,
             minor_units: 1_000_000_000_000_000_000,
@@ -31,7 +31,7 @@ define_currency_set!(
             symbol_first: false,
         },
         ETH: {
-            code: "ETH",
+                code: "ETH",
             exponent: 18,
             locale: EnUs,
             minor_units: 1_000_000_000_000_000_000,
@@ -40,7 +40,7 @@ define_currency_set!(
             symbol_first: false,
         },
         MKR: {
-            code: "MKR",
+                code: "MKR",
             exponent: 18,
             locale: EnUs,
             minor_units: 1_000_000_000_000_000_000,
@@ -49,7 +49,7 @@ define_currency_set!(
             symbol_first: false,
         },
         UNI: {
-            code: "UNI",
+                code: "UNI",
             exponent: 18,
             locale: EnUs,
             minor_units: 1_000_000_000_000_000_000,
@@ -58,7 +58,7 @@ define_currency_set!(
             symbol_first: false,
         },
         USDC: {
-            code: "USDC",
+                code: "USDC",
             exponent: 6,
             locale: EnUs,
             minor_units: 1_000_000,
@@ -67,7 +67,7 @@ define_currency_set!(
             symbol_first: false,
         },
         USDT: {
-            code: "USDT",
+                code: "USDT",
             exponent: 6,
             locale: EnUs,
             minor_units: 1_000_000,
@@ -76,7 +76,7 @@ define_currency_set!(
             symbol_first: false,
         },
         XTZ: {
-            code: "XTZ",
+                code: "XTZ",
             exponent: 6,
             locale: EnUs,
             minor_units: 1_000_000,
@@ -85,7 +85,7 @@ define_currency_set!(
             symbol_first: false,
         },
         ZEC: {
-            code: "ZEC",
+                code: "ZEC",
             exponent: 8,
             locale: EnUs,
             minor_units: 100_000_000,
@@ -95,7 +95,7 @@ define_currency_set!(
         },
         // https://www.bitcoincash.org/
         BCH: {
-            code: "BCH",
+                code: "BCH",
             exponent: 8,
             locale: EnUs,
             minor_units: 100_000_000,
@@ -105,7 +105,7 @@ define_currency_set!(
         },
         // https://bitcoinsv.com/
         BSV: {
-            code: "BSV",
+                code: "BSV",
             exponent: 8,
             locale: EnUs,
             minor_units: 100_000_000,
@@ -113,7 +113,7 @@ define_currency_set!(
             symbol: "BSV",
             symbol_first: false,
         }
-    }
+        }
 );
 
 #[cfg(test)]

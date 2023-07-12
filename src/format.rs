@@ -5,9 +5,9 @@ use std::cmp::Ordering;
 /// Converts Money objects into human readable strings.
 pub struct Formatter;
 
-impl<'a> Formatter {
+impl Formatter {
     /// Returns a formatted Money String given parameters and a Money object.
-    pub fn money<T: FormattableCurrency>(money: &Money<'a, T>, params: Params) -> String {
+    pub fn money<T: FormattableCurrency>(money: &Money<T>, params: Params) -> String {
         let mut decimal = *money.amount();
 
         // Round the decimal
