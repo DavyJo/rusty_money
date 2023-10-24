@@ -1,6 +1,6 @@
 [package]
 name = "rusty-money"
-version = "0.4.3"
+version = "0.4.4"
 authors = ["Varun Srinivasan <varunsrin@gmail.com>"]
 edition = "2021"
 license = "MIT"
@@ -20,6 +20,7 @@ crypto = []
 
 [dependencies]
 rust_decimal = { default-features = false, version = "1.32.0" }
+serde = { version = "1.0.189", features = ["derive"] }
 
 [dev-dependencies]
 rust_decimal_macros = "1.32.0"
