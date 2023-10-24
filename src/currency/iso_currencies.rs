@@ -4,7 +4,7 @@ pub mod iso {
     use std::fmt;
 
     /// Represents a single ISO-4217 currency (e.g. USD).
-    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Hash)]
+    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
     pub struct Currency {
         pub iso_alpha_code: &'static str,
         pub exponent: u32,
