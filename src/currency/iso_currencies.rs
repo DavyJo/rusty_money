@@ -2,9 +2,10 @@
 pub mod iso {
     use crate::{FormattableCurrency, Locale, Locale::*};
     use std::fmt;
+    use serde::{Deserialize, Serialize};
 
     /// Represents a single ISO-4217 currency (e.g. USD).
-    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
+    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Serialize, Deserialize)]
     pub struct Currency {
         pub iso_alpha_code: &'static str,
         pub exponent: u32,

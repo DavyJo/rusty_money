@@ -1,9 +1,10 @@
 use std::str::FromStr;
+use serde::{Deserialize, Serialize};
 
 /// Enumerates regions which have unique formatting standards for Currencies.
 ///
 /// Each Locale maps 1:1 to a LocalFormat, which contains the characteristics for formatting.
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash, Serialize, Deserialize)]
 pub enum Locale {
     EnUs,
     EnIn,
