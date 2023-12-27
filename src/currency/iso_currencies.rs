@@ -1,7 +1,8 @@
 /// ISO-4217 Currency Set
 pub mod iso {
-    use crate::{FormattableCurrency, Locale, Locale::*};
+    use crate::{FormattableCurrency, Locale, Locale::*, Money};
     use std::fmt;
+    use std::iter::Sum;
     use serde::{Deserialize, Serialize};
 
     /// Represents a single ISO-4217 currency (e.g. USD).
@@ -40,6 +41,19 @@ pub mod iso {
 
         fn symbol_first(&self) -> bool {
             self.symbol_first
+        }
+    }
+
+    impl Sum for Money<Currency> {
+        fn sum<I: Iterator<Item=Self>>(iter: I) -> Self {
+            let mut total = None;
+            for money in iter {
+                if total.is_none() { total = Some(Money::from_major(0, money.currency())) }
+                if let Some(mut total) = total.as_mut() {
+                    *total += money;
+                }
+            }
+            if let Some(total) = total { total } else { Money::from_major(0, EUR) }
         }
     }
 
@@ -1851,6 +1865,10 @@ pub mod iso {
 
 #[cfg(test)]
 mod tests {
+    use std::str::FromStr;
+    use rust_decimal::Decimal;
+    use crate::iso::Currency;
+    use crate::Money;
     use super::*;
 
     #[test]
@@ -1876,6 +1894,32 @@ mod tests {
         assert_eq!(iso::USD.iso_alpha_code, "USD");
         assert_eq!(iso::USD.exponent, 2);
         assert_eq!(iso::USD.symbol, "$");
+    }
+
+    #[test]
+    fn test_sum() {
+        let money1 = Money::from_decimal(Decimal::from_str("10.1").unwrap(), iso::USD);
+        let money2 = Money::from_decimal(Decimal::from_str("20.2").unwrap(), iso::USD);
+        let money3 = Money::from_decimal(Decimal::from_str("30.3").unwrap(), iso::USD);
+
+        let monies = vec![money1, money2, money3];
+
+        let total: Money<Currency> = monies.into_iter().sum();
+
+        assert_eq!(total.amount(), &Decimal::from_str("60.6").unwrap());
+        assert_eq!(total.currency(), iso::USD);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_fail_sum() {
+        let money1 = Money::from_decimal(Decimal::from_str("10.1").unwrap(), iso::USD);
+        let money2 = Money::from_decimal(Decimal::from_str("20.2").unwrap(), iso::USD);
+        let money3 = Money::from_decimal(Decimal::from_str("30.3").unwrap(), iso::EUR);
+
+        let monies = vec![money1, money2, money3];
+
+        let total: Money<Currency> = monies.into_iter().sum();
     }
 
     #[test]
