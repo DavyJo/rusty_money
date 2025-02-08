@@ -1,6 +1,6 @@
 [package]
 name = "rusty-money"
-version = "0.4.8"
+version = "0.4.9"
 authors = ["Varun Srinivasan <varunsrin@gmail.com>"]
 edition = "2021"
 license = "MIT"
@@ -12,11 +12,6 @@ Parse, format and perform calculations with money safely.
 """
 keywords = ["money", "currency", "iso-4217", "crypto", "cryptocurrency"]
 categories = ["data-structures", "rust-patterns", "cryptography::cryptocurrencies"]
-
-[features]
-default=["iso"]
-iso = []
-crypto = []
 
 [dependencies]
 rust_decimal = { default-features = false, version = "1.32.0" }
