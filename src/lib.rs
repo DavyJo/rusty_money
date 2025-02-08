@@ -16,3 +16,4 @@ pub use locale::*;
 pub use money::*;
 pub use def::*;
 pub use cur::*;
+pub use currency::*;
