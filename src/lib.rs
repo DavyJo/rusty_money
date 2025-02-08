@@ -1,13 +1,14 @@
 #![doc = include_str!("../README.md")]
 
-mod currency;
 mod error;
 mod exchange;
 mod format;
 mod locale;
 mod money;
+mod def;
+mod currency;
+mod cur;
 
-pub use currency::*;
 pub use error::MoneyError;
 pub use exchange::*;
 pub use format::*;
