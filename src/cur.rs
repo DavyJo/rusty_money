@@ -222,8 +222,6 @@ pub enum CurrencyCode {
     BSV,
 }
 
-
-
 // Automatische Umwandlung von `CurrencyEnum` in `Currency` durch das `From`-Trait
 impl From<CurrencyCode> for Currency {
     fn from(currency_code: CurrencyCode) -> Self {
