@@ -18,10 +18,6 @@ pub struct Currency {
 }
 
 impl FormattableCurrency for Currency {
-    fn to_string(&self) -> String {
-        self.code().to_string()
-    }
-
     fn exponent(&self) -> u32 {
         self.exponent
     }
@@ -43,7 +39,7 @@ impl FormattableCurrency for Currency {
     }
 }
 
-impl Sum for Money<Currency> {
+impl Sum for Money {
     fn sum<I: Iterator<Item = Self>>(iter: I) -> Self {
         let mut total = None;
         for money in iter {
@@ -99,7 +95,7 @@ mod tests {
 
         let monies = vec![money1, money2, money3];
 
-        let total: Money<Currency> = monies.into_iter().sum();
+        let total: Money = monies.into_iter().sum();
 
         assert_eq!(total.amount(), &Decimal::from_str("60.6").unwrap());
         assert_eq!(total.currency(), USD.as_currency());
@@ -114,7 +110,7 @@ mod tests {
 
         let monies = vec![money1, money2, money3];
 
-        let _total: Money<Currency> = monies.into_iter().sum();
+        let _total: Money = monies.into_iter().sum();
     }
 
     #[test]

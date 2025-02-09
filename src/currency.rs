@@ -1,8 +1,6 @@
 use crate::Locale;
 /// Pre-requisite for a Currency to be accepted by a Money.
-pub trait FormattableCurrency: PartialEq + Eq + Copy {
-    fn to_string(&self) -> String;
-
+pub trait FormattableCurrency: PartialEq + Eq + Copy + ToString {
     fn exponent(&self) -> u32;
 
     fn code(&self) -> &'static str;

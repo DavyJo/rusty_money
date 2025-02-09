@@ -1,4 +1,3 @@
-use crate::currency::FormattableCurrency;
 use crate::{Money, Round};
 use std::cmp::Ordering;
 
@@ -7,7 +6,7 @@ pub struct Formatter;
 
 impl Formatter {
     /// Returns a formatted Money String given parameters and a Money object.
-    pub fn money<T: FormattableCurrency>(money: &Money<T>, params: Params) -> String {
+    pub fn money(money: &Money, params: Params) -> String {
         let mut decimal = *money.amount();
 
         // Round the decimal
