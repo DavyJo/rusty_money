@@ -1,3 +1,4 @@
+use std::cmp::Ordering;
 use crate::currency::FormattableCurrency;
 use crate::{Locale, Money};
 use serde::{Deserialize, Serialize};
@@ -6,7 +7,7 @@ use std::iter::Sum;
 use crate::currencies::iso_currencies::iso::EUR;
 
 /// Represents a single ISO-4217 currencies (e.g. USD).
-#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Serialize, Deserialize)]
+#[derive(Debug, Eq, Hash, Clone, Copy, Serialize, Deserialize)]
 pub struct Currency {
     pub code: &'static str,
     pub exponent: u32,
@@ -15,6 +16,24 @@ pub struct Currency {
     pub name: &'static str,
     pub symbol: &'static str,
     pub symbol_first: bool,
+}
+
+impl PartialEq<Self> for Currency {
+    fn eq(&self, other: &Self) -> bool {
+        self.code == other.code
+    }
+}
+
+impl PartialOrd<Self> for Currency {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        self.code.partial_cmp(other.code)
+    }
+}
+
+impl Ord for Currency {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.code.cmp(other.code)
+    }
 }
 
 impl FormattableCurrency for Currency {

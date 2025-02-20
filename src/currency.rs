@@ -11,7 +11,7 @@ mod iso_currencies;
 pub use iso_currencies::iso;
 
 /// Pre-requisite for a Currency to be accepted by a Money.
-pub trait FormattableCurrency: PartialEq + Eq + Copy + ToString {
+pub trait FormattableCurrency: PartialEq + Eq + Copy + ToString + Ord {
     fn exponent(&self) -> u32;
 
     fn code(&self) -> &'static str;
