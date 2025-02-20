@@ -1,3 +1,4 @@
+use derive_more::Display;
 use crate::def::Currency;
 use crate::Locale::{EnBy, EnEu, EnIn, EnUs};
 
@@ -31,7 +32,7 @@ use crate::Locale::{EnBy, EnEu, EnIn, EnUs};
 /// - `Debug`: Allows instances to be formatted using `{:?}` for debugging.
 /// - `PartialEq` and `Eq`: Enables equality comparisons between instances.
 /// - `Hash`: Makes the enum usable as keys in hash maps.
-#[derive(Debug, PartialEq, Eq, Hash, Clone)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Display)]
 pub enum CurrencyCode {
     AED,
     AFN,
