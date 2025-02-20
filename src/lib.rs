@@ -7,7 +7,7 @@ mod locale;
 mod money;
 mod def;
 pub mod currency;
-mod currencies;
+pub mod currencies;
 
 pub use error::MoneyError;
 pub use exchange::*;
