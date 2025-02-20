@@ -9,7 +9,7 @@ use crate::Locale::{EnBy, EnEu, EnIn, EnUs};
 /// # Examples
 ///
 /// ```
-/// use crate::cur::CurrencyCode;
+/// use crate::rusty_money::CurrencyCode;
 ///
 /// let currency = CurrencyCode::USD;
 /// println!("{:?}", currency); // Outputs: USD
@@ -31,7 +31,7 @@ use crate::Locale::{EnBy, EnEu, EnIn, EnUs};
 /// - `Debug`: Allows instances to be formatted using `{:?}` for debugging.
 /// - `PartialEq` and `Eq`: Enables equality comparisons between instances.
 /// - `Hash`: Makes the enum usable as keys in hash maps.
-#[derive(Debug, PartialEq, Eq, Hash)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone)]
 pub enum CurrencyCode {
     AED,
     AFN,
