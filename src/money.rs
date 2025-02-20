@@ -10,7 +10,7 @@ use std::str::FromStr;
 
 use rust_decimal::Decimal;
 
-/// Represents an amount of a given currency.
+/// Represents an amount of a given currencies.
 ///
 /// Money represents financial amounts through a Decimal (owned) and a Currency (reference).
 /// Operations on Money objects always create new instances of Money, with the exception
@@ -163,7 +163,7 @@ impl Ord for Money {
 }
 
 impl Money {
-    /// Creates a Money object given an amount string and a currency str.
+    /// Creates a Money object given an amount string and a currencies str.
     ///
     /// Supports fuzzy amount strings like "100", "100.00" and "-100.00"
     pub fn from_str(amount: &str, currency: Currency) -> Result<Money, MoneyError> {
@@ -200,23 +200,23 @@ impl Money {
         Ok(Money::from_decimal(decimal, currency))
     }
 
-    /// Creates a Money object given an integer and a currency reference.
+    /// Creates a Money object given an integer and a currencies reference.
     ///
-    /// The integer represents minor units of the currency (e.g. 1000 -> 10.00 in USD )
+    /// The integer represents minor units of the currencies (e.g. 1000 -> 10.00 in USD )
     pub fn from_minor(amount: i64, currency: Currency) -> Money {
         let amount = Decimal::new(amount, currency.exponent());
         Money { amount, currency }
     }
 
-    /// Creates a Money object given an integer and a currency reference.
+    /// Creates a Money object given an integer and a currencies reference.
     ///
-    /// The integer represents major units of the currency (e.g. 1000 -> 1,000 in USD )
+    /// The integer represents major units of the currencies (e.g. 1000 -> 1,000 in USD )
     pub fn from_major(amount: i64, currency: Currency) -> Money {
         let amount = Decimal::new(amount, 0);
         Money { amount, currency }
     }
 
-    /// Creates a Money object given a decimal amount and a currency reference.
+    /// Creates a Money object given a decimal amount and a currencies reference.
     pub fn from_decimal(amount: Decimal, currency: Currency) -> Money {
         Money { amount, currency }
     }

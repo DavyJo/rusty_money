@@ -6,8 +6,8 @@ mod format;
 mod locale;
 mod money;
 mod def;
-mod currency;
-mod cur;
+pub mod currency;
+mod currencies;
 
 pub use error::MoneyError;
 pub use exchange::*;
@@ -15,5 +15,4 @@ pub use format::*;
 pub use locale::*;
 pub use money::*;
 pub use def::*;
-pub use cur::*;
 pub use currency::*;

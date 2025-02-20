@@ -3,9 +3,9 @@ use crate::{Locale, Money};
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::iter::Sum;
-use crate::cur::CurrencyCode::EUR;
+use crate::currencies::iso_currencies::iso::EUR;
 
-/// Represents a single ISO-4217 currency (e.g. USD).
+/// Represents a single ISO-4217 currencies (e.g. USD).
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Serialize, Deserialize)]
 pub struct Currency {
     pub code: &'static str,
@@ -53,7 +53,7 @@ impl Sum for Money {
         if let Some(total) = total {
             total
         } else {
-            Money::from_major(0, EUR.into())
+            Money::from_major(0, *EUR)
         }
     }
 }
@@ -70,11 +70,12 @@ mod tests {
     use crate::Money;
     use rust_decimal::Decimal;
     use std::str::FromStr;
-    use crate::cur::CurrencyCode::{BTC, USD};
+    use crate::currencies::crypto_currencies::crypto::BTC;
+    use crate::currencies::iso_currencies::iso::USD;
 
     #[test]
     fn find_returns_known_currencies() {
-        let currency_by_alpha = USD.as_currency();
+        let currency_by_alpha = USD;
         assert_eq!(currency_by_alpha.code, "USD");
         assert_eq!(currency_by_alpha.exponent, 2);
         assert_eq!(currency_by_alpha.symbol, "$");
@@ -82,31 +83,31 @@ mod tests {
 
     #[test]
     fn currency_can_be_accessed_by_reference() {
-        assert_eq!(USD.as_currency().code, "USD");
-        assert_eq!(USD.as_currency().exponent, 2);
-        assert_eq!(USD.as_currency().symbol, "$");
+        assert_eq!(USD.code, "USD");
+        assert_eq!(USD.exponent, 2);
+        assert_eq!(USD.symbol, "$");
     }
 
     #[test]
     fn test_sum() {
-        let money1 = Money::from_decimal(Decimal::from_str("10.1").unwrap(), USD.as_currency());
-        let money2 = Money::from_decimal(Decimal::from_str("20.2").unwrap(), USD.as_currency());
-        let money3 = Money::from_decimal(Decimal::from_str("30.3").unwrap(), USD.as_currency());
+        let money1 = Money::from_decimal(Decimal::from_str("10.1").unwrap(), *USD);
+        let money2 = Money::from_decimal(Decimal::from_str("20.2").unwrap(), *USD);
+        let money3 = Money::from_decimal(Decimal::from_str("30.3").unwrap(), *USD);
 
         let monies = vec![money1, money2, money3];
 
         let total: Money = monies.into_iter().sum();
 
         assert_eq!(total.amount(), &Decimal::from_str("60.6").unwrap());
-        assert_eq!(total.currency(), USD.as_currency());
+        assert_eq!(total.currency(), *USD);
     }
 
     #[test]
     #[should_panic]
     fn test_fail_sum() {
-        let money1 = Money::from_decimal(Decimal::from_str("10.1").unwrap(), USD.as_currency());
-        let money2 = Money::from_decimal(Decimal::from_str("20.2").unwrap(), USD.as_currency());
-        let money3 = Money::from_decimal(Decimal::from_str("30.3").unwrap(), EUR.as_currency());
+        let money1 = Money::from_decimal(Decimal::from_str("10.1").unwrap(), *USD);
+        let money2 = Money::from_decimal(Decimal::from_str("20.2").unwrap(), *USD);
+        let money3 = Money::from_decimal(Decimal::from_str("30.3").unwrap(), *EUR);
 
         let monies = vec![money1, money2, money3];
 
@@ -115,7 +116,7 @@ mod tests {
 
     #[test]
     fn find_returns_known_currencies_crypto() {
-        let currency_by_code = BTC.as_currency();
+        let currency_by_code = BTC;
         assert_eq!(currency_by_code.code, "BTC");
         assert_eq!(currency_by_code.exponent, 8);
         assert_eq!(currency_by_code.symbol, "₿");

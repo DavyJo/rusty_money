@@ -12,7 +12,7 @@ pub enum Locale {
     EnBy,
 }
 
-/// Stores currency formatting metadata for a specific region (e.g. EN-US).
+/// Stores currencies formatting metadata for a specific region (e.g. EN-US).
 #[derive(Debug, PartialEq, Eq)]
 pub struct LocalFormat {
     pub name: &'static str,

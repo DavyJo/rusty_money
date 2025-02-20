@@ -97,13 +97,13 @@ pub struct Params {
     pub exponent_separator: char,
     /// The grouping pattern that is applied to digits / major units (e.g. 1,000,000 vs 1,00,000)
     pub separator_pattern: Vec<usize>,
-    /// The relative positions of the elements in a currency string (e.g. -$1,000 vs $ -1,000)
+    /// The relative positions of the elements in a currencies string (e.g. -$1,000 vs $ -1,000)
     pub positions: Vec<Position>,
     /// The number of minor unit digits should remain after Round::HalfEven is applied.
     pub rounding: Option<u32>,
-    /// The symbol of the currency (e.g. $)
+    /// The symbol of the currencies (e.g. $)
     pub symbol: Option<&'static str>,
-    /// The currency's ISO code (e.g. USD)
+    /// The currencies's ISO code (e.g. USD)
     pub code: Option<&'static str>,
 }
 

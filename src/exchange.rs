@@ -21,7 +21,7 @@ impl Exchange {
         self.map.insert(key, *rate);
     }
 
-    /// Return the ExchangeRate given the currency pair.
+    /// Return the ExchangeRate given the currencies pair.
     pub fn get_rate(&self, from: &Currency, to: &Currency) -> Option<ExchangeRate> {
         let key = Exchange::generate_key(from, to);
         self.map.get(&key).copied()
