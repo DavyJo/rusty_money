@@ -43,9 +43,9 @@ Money::from_major(2, crypto::BTC);         // 2 Bitcoin
 Money objects of the same currency can be compared:
 
  ```rust
-use rusty_money::{Money, iso};
-let hundred = Money::from_minor(10_000, iso::USD);
-let thousand = Money::from_minor(100_000, iso::USD);
+use rusty_money::{Money};
+let hundred = Money::from_minor(10_000, USD.as_currency());
+let thousand = Money::from_minor(100_000, USD.as_currency());
 
 println!("{}", thousand > hundred);     // false
 println!("{}", thousand.is_positive()); // true
@@ -109,5 +109,5 @@ rate.convert(&Money::from_minor(100_000, iso::USD));                    // 500 E
 // An Exchange can be used to store ExchangeRates for later use
 let mut exchange = Exchange::new();
 exchange.set_rate(&rate);
-exchange.get_rate(iso::USD, iso::EUR);
+exchange.get_rate(&iso::USD, &iso::EUR);
 ```
