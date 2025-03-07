@@ -33,7 +33,8 @@ rusty-money = { version = "0.4.1", features = ["iso", "crypto"] }
 The currency sets can then be used like this:
 
 ```rust
-use rusty_money::{Money, iso, crypto};
+use rusty_money::Money;
+use rusty_money::currencies::{iso, crypto};
 
 Money::from_major(2_000, iso::USD);        // 2000 U.S Dollars
 Money::from_major(2_000, iso::GBP);        // 2000 British Pounds
@@ -44,8 +45,9 @@ Money objects of the same currency can be compared:
 
  ```rust
 use rusty_money::{Money};
-let hundred = Money::from_minor(10_000, USD.as_currency());
-let thousand = Money::from_minor(100_000, USD.as_currency());
+use rusty_money::currencies::iso::USD;
+let hundred = Money::from_minor(10_000, USD);
+let thousand = Money::from_minor(100_000, USD);
 
 println!("{}", thousand > hundred);     // false
 println!("{}", thousand.is_positive()); // true
@@ -65,7 +67,8 @@ precision, you call the `round` function, which  supports three modes:
 Money can be added, subtracted, multiplied and divided like this:
 
 ```rust
-use rusty_money::{Money, Round, iso};
+use rusty_money::{Money, Round};
+use rusty_money::currencies::iso;
 
 Money::from_minor(100, iso::USD) + Money::from_minor(100, iso::USD);  // 2 USD
 Money::from_minor(100, iso::USD) - Money::from_minor(100, iso::USD);  // 0 USD
@@ -85,7 +88,8 @@ according to the locale of the currency. If you need to customize this output, t
 accepts a more detailed set of parameters.
 
 ```rust
-use rusty_money::{Money, iso};
+use rusty_money::Money;
+use rusty_money::currencies::iso;
 let usd = Money::from_str("-2000.009", iso::USD).unwrap();
 let eur = Money::from_str("-2000.009", iso::EUR).unwrap();
 
@@ -99,7 +103,8 @@ The library also provides two additional types - `Exchange` and `ExchangeRates` 
 to another.
 
 ```rust
-use rusty_money::{Money, Exchange, ExchangeRate, iso};
+use rusty_money::{Money, Exchange, ExchangeRate};
+use rusty_money::currencies::iso;
 use rust_decimal_macros::*;
 
 // Convert 1000 USD to EUR at a 2:1 exchange rate.

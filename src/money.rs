@@ -1,7 +1,7 @@
 use crate::currency::FormattableCurrency;
 use crate::format::{Formatter, Params, Position};
 use crate::locale::LocalFormat;
-use crate::MoneyError;
+use crate::{Currency, MoneyError};
 
 use std::cmp::Ordering;
 use std::fmt;
@@ -16,14 +16,14 @@ use rust_decimal::Decimal;
 /// Operations on Money objects always create new instances of Money, with the exception
 /// of `round()`.
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
-pub struct Money<'a, T: FormattableCurrency> {
+pub struct Money<'a> {
     amount: Decimal,
-    currency: &'a T,
+    currency: &'a Currency,
 }
 
-impl<'a, T: FormattableCurrency> Add for Money<'a, T> {
-    type Output = Money<'a, T>;
-    fn add(self, other: Money<'a, T>) -> Money<'a, T> {
+impl<'a> Add for Money<'a> {
+    type Output = Money<'a>;
+    fn add(self, other: Money<'a>) -> Money<'a> {
         if self.currency != other.currency {
             panic!();
         }
@@ -31,7 +31,7 @@ impl<'a, T: FormattableCurrency> Add for Money<'a, T> {
     }
 }
 
-impl<'a, T: FormattableCurrency> AddAssign for Money<'a, T> {
+impl<'a> AddAssign for Money<'a> {
     fn add_assign(&mut self, other: Self) {
         if self.currency != other.currency {
             panic!();
@@ -43,9 +43,9 @@ impl<'a, T: FormattableCurrency> AddAssign for Money<'a, T> {
     }
 }
 
-impl<'a, T: FormattableCurrency> Sub for Money<'a, T> {
-    type Output = Money<'a, T>;
-    fn sub(self, other: Money<'a, T>) -> Money<'a, T> {
+impl<'a> Sub for Money<'a> {
+    type Output = Money<'a>;
+    fn sub(self, other: Money<'a>) -> Money<'a> {
         if self.currency != other.currency {
             panic!();
         }
@@ -53,7 +53,7 @@ impl<'a, T: FormattableCurrency> Sub for Money<'a, T> {
     }
 }
 
-impl<'a, T: FormattableCurrency> SubAssign for Money<'a, T> {
+impl<'a> SubAssign for Money<'a> {
     fn sub_assign(&mut self, other: Self) {
         if self.currency != other.currency {
             panic!();
@@ -66,8 +66,8 @@ impl<'a, T: FormattableCurrency> SubAssign for Money<'a, T> {
     }
 }
 
-impl<'a, T: FormattableCurrency> Neg for Money<'a, T> {
-    type Output = Money<'a, T>;
+impl<'a> Neg for Money<'a> {
+    type Output = Money<'a>;
 
     fn neg(self) -> Self::Output {
         Money {
@@ -79,25 +79,25 @@ impl<'a, T: FormattableCurrency> Neg for Money<'a, T> {
 
 macro_rules! impl_mul_div {
     ($type:ty) => {
-        impl<'a, T: FormattableCurrency> Mul<$type> for Money<'a, T> {
-            type Output = Money<'a, T>;
+        impl<'a> Mul<$type> for Money<'a> {
+            type Output = Money<'a>;
 
-            fn mul(self, rhs: $type) -> Money<'a, T> {
+            fn mul(self, rhs: $type) -> Money<'a> {
                 let rhs = Decimal::from_str(&rhs.to_string()).unwrap();
                 Money::from_decimal(self.amount * rhs, self.currency)
             }
         }
 
-        impl<'a, T: FormattableCurrency> Mul<Money<'a, T>> for $type {
-            type Output = Money<'a, T>;
+        impl<'a> Mul<Money<'a>> for $type {
+            type Output = Money<'a>;
 
-            fn mul(self, rhs: Money<'a, T>) -> Money<'a, T> {
+            fn mul(self, rhs: Money<'a>) -> Money<'a> {
                 let lhs = Decimal::from_str(&self.to_string()).unwrap();
                 Money::from_decimal(rhs.amount * lhs, rhs.currency)
             }
         }
 
-        impl<'a, T: FormattableCurrency> MulAssign<$type> for Money<'a, T> {
+        impl<'a> MulAssign<$type> for Money<'a> {
             fn mul_assign(&mut self, rhs: $type) {
                 *self = Self {
                     amount: self.amount * Decimal::from(rhs),
@@ -106,25 +106,25 @@ macro_rules! impl_mul_div {
             }
         }
 
-        impl<'a, T: FormattableCurrency> Div<$type> for Money<'a, T> {
-            type Output = Money<'a, T>;
+        impl<'a> Div<$type> for Money<'a> {
+            type Output = Money<'a>;
 
-            fn div(self, rhs: $type) -> Money<'a, T> {
+            fn div(self, rhs: $type) -> Money<'a> {
                 let rhs = Decimal::from_str(&rhs.to_string()).unwrap();
                 Money::from_decimal(self.amount / rhs, self.currency)
             }
         }
 
-        impl<'a, T: FormattableCurrency> Div<Money<'a, T>> for $type {
-            type Output = Money<'a, T>;
+        impl<'a> Div<Money<'a>> for $type {
+            type Output = Money<'a>;
 
-            fn div(self, rhs: Money<'a, T>) -> Money<'a, T> {
+            fn div(self, rhs: Money<'a>) -> Money<'a> {
                 let lhs = Decimal::from_str(&self.to_string()).unwrap();
                 Money::from_decimal(lhs / rhs.amount, rhs.currency)
             }
         }
 
-        impl<'a, T: FormattableCurrency> DivAssign<$type> for Money<'a, T> {
+        impl<'a> DivAssign<$type> for Money<'a> {
             fn div_assign(&mut self, rhs: $type) {
                 *self = Self {
                     amount: self.amount / Decimal::from(rhs),
@@ -147,14 +147,14 @@ impl_mul_div!(u32);
 impl_mul_div!(u64);
 impl_mul_div!(Decimal);
 
-impl<'a, T: FormattableCurrency> PartialOrd for Money<'a, T> {
-    fn partial_cmp(&self, other: &Money<'a, T>) -> Option<Ordering> {
+impl<'a> PartialOrd for Money<'a> {
+    fn partial_cmp(&self, other: &Money<'a>) -> Option<Ordering> {
         Some(self.cmp(other))
     }
 }
 
-impl<'a, T: FormattableCurrency> Ord for Money<'a, T> {
-    fn cmp(&self, other: &Money<'a, T>) -> Ordering {
+impl<'a> Ord for Money<'a> {
+    fn cmp(&self, other: &Money<'a>) -> Ordering {
         if self.currency != other.currency {
             panic!();
         }
@@ -162,11 +162,11 @@ impl<'a, T: FormattableCurrency> Ord for Money<'a, T> {
     }
 }
 
-impl<'a, T: FormattableCurrency> Money<'a, T> {
+impl<'a> Money<'a> {
     /// Creates a Money object given an amount string and a currency str.
     ///
     /// Supports fuzzy amount strings like "100", "100.00" and "-100.00"
-    pub fn from_str(amount: &str, currency: &'a T) -> Result<Money<'a, T>, MoneyError> {
+    pub fn from_str(amount: &str, currency: &'a Currency) -> Result<Money<'a>, MoneyError> {
         let format = LocalFormat::from_locale(currency.locale());
         let amount_parts: Vec<&str> = amount.split(format.exponent_separator).collect();
 
@@ -203,7 +203,7 @@ impl<'a, T: FormattableCurrency> Money<'a, T> {
     /// Creates a Money object given an integer and a currency reference.
     ///
     /// The integer represents minor units of the currency (e.g. 1000 -> 10.00 in USD )
-    pub fn from_minor(amount: i64, currency: &'a T) -> Money<'a, T> {
+    pub fn from_minor(amount: i64, currency: &'a Currency) -> Money<'a> {
         let amount = Decimal::new(amount, currency.exponent());
         Money { amount, currency }
     }
@@ -211,13 +211,13 @@ impl<'a, T: FormattableCurrency> Money<'a, T> {
     /// Creates a Money object given an integer and a currency reference.
     ///
     /// The integer represents major units of the currency (e.g. 1000 -> 1,000 in USD )
-    pub fn from_major(amount: i64, currency: &'a T) -> Money<'a, T> {
+    pub fn from_major(amount: i64, currency: &'a Currency) -> Money<'a> {
         let amount = Decimal::new(amount, 0);
         Money { amount, currency }
     }
 
     /// Creates a Money object given a decimal amount and a currency reference.
-    pub fn from_decimal(amount: Decimal, currency: &'a T) -> Money<'a, T> {
+    pub fn from_decimal(amount: Decimal, currency: &'a Currency) -> Money<'a> {
         Money { amount, currency }
     }
 
@@ -227,7 +227,7 @@ impl<'a, T: FormattableCurrency> Money<'a, T> {
     }
 
     /// Returns the Currency type.
-    pub fn currency(&self) -> &'a T {
+    pub fn currency(&self) -> &'a Currency {
         self.currency
     }
 
@@ -250,7 +250,7 @@ impl<'a, T: FormattableCurrency> Money<'a, T> {
     ///
     /// If the division cannot be applied perfectly, it allocates the remainder
     /// to some of the shares.
-    pub fn allocate_to(&self, number: i32) -> Result<Vec<Money<'a, T>>, MoneyError> {
+    pub fn allocate_to(&self, number: i32) -> Result<Vec<Money<'a>>, MoneyError> {
         let ratios: Vec<i32> = (0..number).map(|_| 1).collect();
         self.allocate(ratios)
     }
@@ -259,7 +259,7 @@ impl<'a, T: FormattableCurrency> Money<'a, T> {
     ///
     /// If the division cannot be applied perfectly, it allocates the remainder
     /// to some of the shares.
-    pub fn allocate(&self, ratios: Vec<i32>) -> Result<Vec<Money<'a, T>>, MoneyError> {
+    pub fn allocate(&self, ratios: Vec<i32>) -> Result<Vec<Money<'a>>, MoneyError> {
         if ratios.is_empty() {
             return Err(MoneyError::InvalidRatio);
         }
@@ -272,7 +272,7 @@ impl<'a, T: FormattableCurrency> Money<'a, T> {
         let mut remainder = self.amount;
         let ratio_total: Decimal = ratios.iter().fold(Decimal::ZERO, |acc, x| acc + x);
 
-        let mut allocations: Vec<Money<'a, T>> = Vec::new();
+        let mut allocations: Vec<Money<'a>> = Vec::new();
 
         for ratio in ratios {
             if ratio <= Decimal::ZERO {
@@ -303,7 +303,7 @@ impl<'a, T: FormattableCurrency> Money<'a, T> {
     }
 
     /// Returns a `Money` rounded to the specified number of minor units using the rounding strategy.
-    pub fn round(&self, digits: u32, strategy: Round) -> Money<'a, T> {
+    pub fn round(&self, digits: u32, strategy: Round) -> Money<'a> {
         let mut money = *self;
 
         money.amount = match strategy {
@@ -333,7 +333,7 @@ pub enum Round {
     HalfEven,
 }
 
-impl<'a, T: FormattableCurrency + FormattableCurrency> fmt::Display for Money<'a, T> {
+impl<'a> fmt::Display for Money<'a> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let currency = self.currency;
         let format = LocalFormat::from_locale(currency.locale());
@@ -360,9 +360,9 @@ impl<'a, T: FormattableCurrency + FormattableCurrency> fmt::Display for Money<'a
 
 #[cfg(test)]
 mod tests {
+    use crate::currencies::iso::{AED, BHD, EUR, GBP, INR, USD};
     use super::*;
     use crate::find_currency;
-    use crate::iso::{AED, BHD, EUR, GBP, INR, USD};
 
     #[test]
     fn money_major_minor() {

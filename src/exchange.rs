@@ -1,48 +1,47 @@
-use crate::currency::FormattableCurrency;
-use crate::{Money, MoneyError};
+use crate::{Currency, Money, MoneyError};
 use rust_decimal::Decimal;
 use std::collections::HashMap;
 
 /// Stores `ExchangeRate`s for easier access.
 #[derive(Debug, Default)]
-pub struct Exchange<'a, T: FormattableCurrency> {
-    map: HashMap<String, ExchangeRate<'a, T>>,
+pub struct Exchange<'a> {
+    map: HashMap<String, ExchangeRate<'a>>,
 }
 
-impl<'a, T: FormattableCurrency> Exchange<'a, T> {
-    pub fn new() -> Exchange<'a, T> {
+impl<'a> Exchange<'a> {
+    pub fn new() -> Exchange<'a> {
         Exchange {
             map: HashMap::new(),
         }
     }
 
     /// Update an ExchangeRate or add it if does not exist.
-    pub fn set_rate(&mut self, rate: &ExchangeRate<'a, T>) {
+    pub fn set_rate(&mut self, rate: &ExchangeRate<'a>) {
         let key = Exchange::generate_key(rate.from, rate.to);
         self.map.insert(key, *rate);
     }
 
     /// Return the ExchangeRate given the currency pair.
-    pub fn get_rate(&self, from: &T, to: &T) -> Option<ExchangeRate<'a, T>> {
+    pub fn get_rate(&self, from: &Currency, to: &Currency) -> Option<ExchangeRate<'a>> {
         let key = Exchange::generate_key(from, to);
         self.map.get(&key).copied()
     }
 
-    fn generate_key(from: &T, to: &T) -> String {
+    fn generate_key(from: &Currency, to: &Currency) -> String {
         from.to_string() + "-" + &to.to_string()
     }
 }
 
 /// Stores rates of conversion between two currencies.
 #[derive(Debug, PartialEq, Copy, Clone)]
-pub struct ExchangeRate<'a, T: FormattableCurrency> {
-    pub from: &'a T,
-    pub to: &'a T,
+pub struct ExchangeRate<'a> {
+    pub from: &'a Currency,
+    pub to: &'a Currency,
     rate: Decimal,
 }
 
-impl<'a, T: FormattableCurrency> ExchangeRate<'a, T> {
-    pub fn new(from: &'a T, to: &'a T, rate: Decimal) -> Result<ExchangeRate<'a, T>, MoneyError> {
+impl<'a> ExchangeRate<'a> {
+    pub fn new(from: &'a Currency, to: &'a Currency, rate: Decimal) -> Result<ExchangeRate<'a>, MoneyError> {
         if from == to {
             return Err(MoneyError::InvalidCurrency);
         }
@@ -50,7 +49,7 @@ impl<'a, T: FormattableCurrency> ExchangeRate<'a, T> {
     }
 
     /// Converts a Money from one Currency to another using the exchange rate.
-    pub fn convert(&self, amount: &Money<'a, T>) -> Result<Money<'a, T>, MoneyError> {
+    pub fn convert(&self, amount: &Money<'a>) -> Result<Money<'a>, MoneyError> {
         if amount.currency() != self.from {
             return Err(MoneyError::InvalidCurrency);
         }
@@ -64,7 +63,7 @@ mod tests {
     use super::*;
     use crate::find_currency;
     use rust_decimal_macros::*;
-    use crate::iso::{EUR, GBP, USD};
+    use crate::currencies::iso::{EUR, GBP, USD};
 
     #[test]
     fn exchange_stores_rates() {

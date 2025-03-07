@@ -5,7 +5,6 @@ mod exchange;
 mod format;
 mod locale;
 mod money;
-mod def;
 pub mod currency;
 pub mod currencies;
 
@@ -14,5 +13,4 @@ pub use exchange::*;
 pub use format::*;
 pub use locale::*;
 pub use money::*;
-pub use def::*;
 pub use currency::*;
