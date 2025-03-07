@@ -361,146 +361,88 @@ impl<'a, T: FormattableCurrency + FormattableCurrency> fmt::Display for Money<'a
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::define_currency_set;
-
-    define_currency_set!(
-        test {
-            USD: {
-                code: "USD",
-                exponent: 2,
-                locale: EnUs,
-                minor_units: 100,
-                name: "USD",
-                symbol: "$",
-                symbol_first: true,
-            },
-            GBP : {
-                code: "GBP",
-                exponent: 2,
-                locale: EnUs,
-                minor_units: 1,
-                name: "British Pound",
-                symbol: "£",
-                symbol_first: true,
-            },
-            EUR : {
-                code: "EUR",
-                exponent: 2,
-                locale: EnEu,
-                minor_units: 1,
-                name: "Euro",
-                symbol: "€",
-                symbol_first: true,
-            },
-            INR : {
-                code: "INR",
-                exponent: 2,
-                locale: EnIn,
-                minor_units: 50,
-                name: "Indian Rupee",
-                symbol: "₹",
-                symbol_first: true,
-            },
-            BHD : {
-                code: "BHD",
-                exponent: 3,
-                locale: EnUs,
-                minor_units: 5,
-                name: "Bahraini Dinar",
-                symbol: "ب.د",
-                symbol_first: true,
-            },
-            AED : {
-                code: "AED",
-                exponent: 2,
-                locale: EnUs,
-                minor_units: 25,
-                name: "United Arab Emirates Dirham",
-                symbol: "د.إ",
-                symbol_first: false,
-            }
-        }
-    );
+    use crate::find_currency;
+    use crate::iso::{AED, BHD, EUR, GBP, INR, USD};
 
     #[test]
     fn money_major_minor() {
-        let _usd = test::find("USD"); // Prevents unused code warnings from the defined module.
-        let major_usd = Money::from_major(10, test::USD);
-        let minor_usd = Money::from_minor(1000, test::USD);
+        let _usd = find_currency("USD"); // Prevents unused code warnings from the defined module.
+        let major_usd = Money::from_major(10, USD);
+        let minor_usd = Money::from_minor(1000, USD);
         assert_eq!(major_usd, minor_usd);
     }
 
     #[test]
     fn money_from_string_parses_correctly() {
-        let expected_money = Money::from_minor(2999, test::GBP);
-        let money = Money::from_str("29.99", test::GBP).unwrap();
+        let expected_money = Money::from_minor(2999, GBP);
+        let money = Money::from_str("29.99", GBP).unwrap();
         assert_eq!(money, expected_money);
     }
 
     #[test]
     fn money_from_string_parses_correctly_for_64_bit_numbers() {
-        let expected_money = Money::from_major(i64::MAX, test::GBP);
-        let money = Money::from_str(&i64::MAX.to_string(), test::GBP).unwrap();
+        let expected_money = Money::from_major(i64::MAX, GBP);
+        let money = Money::from_str(&i64::MAX.to_string(), GBP).unwrap();
         assert_eq!(money, expected_money);
     }
 
     #[test]
     fn money_from_string_parses_signs() {
-        let expected_money = Money::from_minor(-300, test::GBP);
-        let money = Money::from_str("-3", test::GBP).unwrap();
+        let expected_money = Money::from_minor(-300, GBP);
+        let money = Money::from_str("-3", GBP).unwrap();
         assert_eq!(money, expected_money);
 
-        let expected_money = Money::from_minor(300, test::GBP);
-        let money = Money::from_str("+3", test::GBP).unwrap();
+        let expected_money = Money::from_minor(300, GBP);
+        let money = Money::from_str("+3", GBP).unwrap();
         assert_eq!(money, expected_money);
     }
 
     #[test]
     fn money_from_string_ignores_separators() {
-        let expected_money = Money::from_minor(100000000, test::GBP);
-        let money = Money::from_str("1,000,000", test::GBP).unwrap();
+        let expected_money = Money::from_minor(100000000, GBP);
+        let money = Money::from_str("1,000,000", GBP).unwrap();
         assert_eq!(money, expected_money);
     }
 
     #[test]
     fn money_from_string_decimal_sanity() {
-        let money = Money::from_str("1,00.00", test::GBP);
+        let money = Money::from_str("1,00.00", GBP);
         assert_eq!(money.unwrap_err(), MoneyError::InvalidAmount);
 
-        let money = Money::from_str("1.00,00", test::EUR);
+        let money = Money::from_str("1.00,00", EUR);
         assert_eq!(money.unwrap_err(), MoneyError::InvalidAmount);
 
-        let money = Money::from_str("1.00.000,00", test::EUR);
+        let money = Money::from_str("1.00.000,00", EUR);
         assert_eq!(money.unwrap_err(), MoneyError::InvalidAmount);
 
-        let money = Money::from_str("1.00.000.000,00", test::EUR);
+        let money = Money::from_str("1.00.000.000,00", EUR);
         assert_eq!(money.unwrap_err(), MoneyError::InvalidAmount);
 
-        let money = Money::from_str("1,00.00", test::INR);
+        let money = Money::from_str("1,00.00", INR);
         assert_eq!(money.unwrap_err(), MoneyError::InvalidAmount);
 
-        let money = Money::from_str("1.000.000.00", test::INR);
+        let money = Money::from_str("1.000.000.00", INR);
         assert_eq!(money.unwrap_err(), MoneyError::InvalidAmount);
     }
 
     #[test]
     fn money_from_string_parse_errs() {
         // If the delimiter precede the separators
-        let money = Money::from_str("1.0000,000", test::GBP);
+        let money = Money::from_str("1.0000,000", GBP);
         assert_eq!(money.unwrap_err(), MoneyError::InvalidAmount);
 
         // If there are multiple delimiters
-        let money = Money::from_str("1.0000.000", test::GBP);
+        let money = Money::from_str("1.0000.000", GBP);
         assert_eq!(money.unwrap_err(), MoneyError::InvalidAmount);
 
         // If there is an unrecognized character
-        let money = Money::from_str("1.0000!000", test::GBP);
+        let money = Money::from_str("1.0000!000", GBP);
         assert_eq!(money.unwrap_err(), MoneyError::InvalidAmount);
 
         // If there are no characters other than separators
-        let exponent_separator_only = Money::from_str(",", test::GBP);
-        let amount_separator_only = Money::from_str(".", test::GBP);
-        let both_separators = Money::from_str(",,.", test::GBP);
+        let exponent_separator_only = Money::from_str(",", GBP);
+        let amount_separator_only = Money::from_str(".", GBP);
+        let both_separators = Money::from_str(",,.", GBP);
         assert_eq!(
             exponent_separator_only.unwrap_err(),
             MoneyError::InvalidAmount
@@ -515,271 +457,271 @@ mod tests {
     #[test]
     fn money_format_rounds_exponent() {
         // // 19.999 rounds to 20 for USD
-        let money = Money::from_str("19.9999", test::USD).unwrap();
+        let money = Money::from_str("19.9999", USD).unwrap();
         assert_eq!("$20.00", format!("{}", money));
 
         // // 29.111 rounds to 29.11 for USD
-        let money = Money::from_str("29.111", test::USD).unwrap();
+        let money = Money::from_str("29.111", USD).unwrap();
         assert_eq!("$29.11", format!("{}", money));
 
         // // 39.1155 rounds to 39.116 for BHD
-        let money = Money::from_str("39.1155", test::BHD).unwrap();
-        assert_eq!("ب.د39.116", format!("{}", money));
+        let money = Money::from_str("39.1155", BHD).unwrap();
+        assert_eq!("د.ب39.116", format!("{}", money));
     }
 
     #[test]
     fn money_addition_and_subtraction() {
         // Addition
         assert_eq!(
-            Money::from_major(2, test::USD),
-            Money::from_major(1, test::USD) + Money::from_major(1, test::USD)
+            Money::from_major(2, USD),
+            Money::from_major(1, USD) + Money::from_major(1, USD)
         );
         // Subtraction
         assert_eq!(
-            Money::from_major(0, test::USD),
-            Money::from_major(1, test::USD) - Money::from_major(1, test::USD)
+            Money::from_major(0, USD),
+            Money::from_major(1, USD) - Money::from_major(1, USD)
         );
     }
 
     #[test]
     #[should_panic]
     fn money_addition_panics_on_different_currencies() {
-        let _no_op = Money::from_minor(100, test::USD) + Money::from_minor(100, test::GBP);
+        let _no_op = Money::from_minor(100, USD) + Money::from_minor(100, GBP);
     }
 
     #[test]
     #[should_panic]
     fn money_subtraction_panics_on_different_currencies() {
-        let _no_op = Money::from_minor(100, test::USD) - Money::from_minor(100, test::GBP);
+        let _no_op = Money::from_minor(100, USD) - Money::from_minor(100, GBP);
     }
 
     #[test]
     #[should_panic]
     fn money_add_assign_panics_on_different_currencies() {
-        let mut money = Money::from_minor(100, test::USD);
-        money += Money::from_minor(100, test::GBP);
+        let mut money = Money::from_minor(100, USD);
+        money += Money::from_minor(100, GBP);
     }
 
     #[test]
     #[should_panic]
     fn money_sub_assign_panics_on_different_currencies() {
-        let mut money = Money::from_minor(100, test::USD);
-        money -= Money::from_minor(100, test::GBP);
+        let mut money = Money::from_minor(100, USD);
+        money -= Money::from_minor(100, GBP);
     }
 
     #[test]
     fn money_multiplication_and_division() {
         // Multiplication integer
         assert_eq!(
-            Money::from_minor(200, test::USD),
-            Money::from_minor(100, test::USD) * 2
+            Money::from_minor(200, USD),
+            Money::from_minor(100, USD) * 2
         );
         assert_eq!(
-            Money::from_minor(200, test::USD),
-            Money::from_minor(-100, test::USD) * -2
+            Money::from_minor(200, USD),
+            Money::from_minor(-100, USD) * -2
         );
         assert_eq!(
-            Money::from_minor(200, test::USD),
-            -2 * Money::from_minor(-100, test::USD)
+            Money::from_minor(200, USD),
+            -2 * Money::from_minor(-100, USD)
         );
 
         // Multiplication decimal
         assert_eq!(
-            Money::from_minor(200, test::USD),
-            Money::from_minor(100, test::USD) * Decimal::new(2, 0)
+            Money::from_minor(200, USD),
+            Money::from_minor(100, USD) * Decimal::new(2, 0)
         );
         assert_eq!(
-            Money::from_minor(200, test::USD),
-            Money::from_minor(-100, test::USD) * Decimal::new(-2, 0)
+            Money::from_minor(200, USD),
+            Money::from_minor(-100, USD) * Decimal::new(-2, 0)
         );
         assert_eq!(
-            Money::from_minor(200, test::USD),
-            Decimal::new(-2, 0) * Money::from_minor(-100, test::USD)
+            Money::from_minor(200, USD),
+            Decimal::new(-2, 0) * Money::from_minor(-100, USD)
         );
         assert_eq!(
-            Money::from_minor(200, test::USD),
-            Money::from_minor(400, test::USD) * Decimal::new(5, 1)
+            Money::from_minor(200, USD),
+            Money::from_minor(400, USD) * Decimal::new(5, 1)
         );
 
         // Division integer
         assert_eq!(
-            Money::from_minor(200, test::USD),
-            Money::from_minor(400, test::USD) / 2
+            Money::from_minor(200, USD),
+            Money::from_minor(400, USD) / 2
         );
         assert_eq!(
-            Money::from_minor(200, test::USD),
-            Money::from_minor(-400, test::USD) / -2
+            Money::from_minor(200, USD),
+            Money::from_minor(-400, USD) / -2
         );
         assert_eq!(
-            Money::from_minor(50, test::USD),
-            -1 / Money::from_minor(-200, test::USD)
+            Money::from_minor(50, USD),
+            -1 / Money::from_minor(-200, USD)
         );
         assert_eq!(
-            Money::from_minor(200, test::USD),
-            Money::from_minor(-200, test::USD) / -1
+            Money::from_minor(200, USD),
+            Money::from_minor(-200, USD) / -1
         );
 
         // Division decimal
         assert_eq!(
-            Money::from_minor(200, test::USD),
-            Money::from_minor(400, test::USD) / Decimal::new(2, 0)
+            Money::from_minor(200, USD),
+            Money::from_minor(400, USD) / Decimal::new(2, 0)
         );
         assert_eq!(
-            Money::from_minor(200, test::USD),
-            Money::from_minor(-400, test::USD) / Decimal::new(-2, 0)
+            Money::from_minor(200, USD),
+            Money::from_minor(-400, USD) / Decimal::new(-2, 0)
         );
         assert_eq!(
-            Money::from_minor(50, test::USD),
-            Decimal::new(-1, 0) / Money::from_minor(-200, test::USD)
+            Money::from_minor(50, USD),
+            Decimal::new(-1, 0) / Money::from_minor(-200, USD)
         );
         assert_eq!(
-            Money::from_minor(200, test::USD),
-            Money::from_minor(-200, test::USD) / Decimal::new(-1, 0)
+            Money::from_minor(200, USD),
+            Money::from_minor(-200, USD) / Decimal::new(-1, 0)
         );
         assert_eq!(
-            Money::from_minor(400, test::USD),
-            Money::from_minor(-200, test::USD) / Decimal::new(-5, 1)
+            Money::from_minor(400, USD),
+            Money::from_minor(-200, USD) / Decimal::new(-5, 1)
         );
 
         //MulAssign integer
-        let mut money = Money::from_minor(100, test::USD);
+        let mut money = Money::from_minor(100, USD);
         money *= 2;
-        assert_eq!(Money::from_minor(200, test::USD), money);
+        assert_eq!(Money::from_minor(200, USD), money);
 
         //MulAssign decimal
-        let mut money = Money::from_minor(100, test::USD);
+        let mut money = Money::from_minor(100, USD);
         money *= Decimal::new(2, 0);
-        assert_eq!(Money::from_minor(200, test::USD), money);
+        assert_eq!(Money::from_minor(200, USD), money);
 
         //DivAssign integer
-        let mut money = Money::from_minor(100, test::USD);
+        let mut money = Money::from_minor(100, USD);
         money /= -2;
-        assert_eq!(Money::from_minor(-50, test::USD), money);
+        assert_eq!(Money::from_minor(-50, USD), money);
 
         //DivAssign decimal
-        let mut money = Money::from_minor(100, test::USD);
+        let mut money = Money::from_minor(100, USD);
         money /= Decimal::new(-2, 0);
-        assert_eq!(Money::from_minor(-50, test::USD), money);
+        assert_eq!(Money::from_minor(-50, USD), money);
     }
 
     #[test]
     fn money_negation() {
-        let money = Money::from_minor(100, test::USD);
+        let money = Money::from_minor(100, USD);
 
-        assert_eq!(-money, Money::from_minor(-100, test::USD));
+        assert_eq!(-money, Money::from_minor(-100, USD));
     }
 
     #[test]
     fn money_comparison() {
         // Greater Than
-        assert!(Money::from_minor(200, test::USD) > Money::from_minor(100, test::USD));
+        assert!(Money::from_minor(200, USD) > Money::from_minor(100, USD));
         // Less Than
-        assert!(Money::from_minor(100, test::USD) < Money::from_minor(200, test::USD));
+        assert!(Money::from_minor(100, USD) < Money::from_minor(200, USD));
         // Equals
-        assert!(Money::from_minor(100, test::USD) == Money::from_minor(100, test::USD));
-        assert!(Money::from_minor(100, test::USD) != Money::from_minor(100, test::GBP));
+        assert!(Money::from_minor(100, USD) == Money::from_minor(100, USD));
+        assert!(Money::from_minor(100, USD) != Money::from_minor(100, GBP));
         // is positive
-        assert!(Money::from_minor(100, test::USD).is_positive());
-        assert!(!Money::from_minor(0, test::USD).is_positive());
-        assert!(!Money::from_minor(-100, test::USD).is_positive());
+        assert!(Money::from_minor(100, USD).is_positive());
+        assert!(!Money::from_minor(0, USD).is_positive());
+        assert!(!Money::from_minor(-100, USD).is_positive());
         // is zero
-        assert!(Money::from_minor(0, test::USD).is_zero());
-        assert!(!Money::from_minor(100, test::USD).is_zero());
-        assert!(!Money::from_minor(-100, test::USD).is_zero());
+        assert!(Money::from_minor(0, USD).is_zero());
+        assert!(!Money::from_minor(100, USD).is_zero());
+        assert!(!Money::from_minor(-100, USD).is_zero());
         // is negative
-        assert!(Money::from_minor(-100, test::USD).is_negative());
-        assert!(!Money::from_minor(100, test::USD).is_negative());
-        assert!(!Money::from_minor(0, test::USD).is_negative());
+        assert!(Money::from_minor(-100, USD).is_negative());
+        assert!(!Money::from_minor(100, USD).is_negative());
+        assert!(!Money::from_minor(0, USD).is_negative());
     }
 
     #[test]
     #[should_panic]
     fn money_ops_greater_than_panics_on_different_currencies() {
-        assert!(Money::from_minor(100, test::USD) < Money::from_minor(100, test::GBP));
+        assert!(Money::from_minor(100, USD) < Money::from_minor(100, GBP));
     }
 
     #[test]
     #[should_panic]
     fn money_ops_less_than_panics_on_different_currencies() {
-        assert!(Money::from_minor(100, test::USD) < Money::from_minor(100, test::GBP));
+        assert!(Money::from_minor(100, USD) < Money::from_minor(100, GBP));
     }
 
     #[test]
     fn money_allocate() {
-        let money = Money::from_minor(1_100, test::USD);
+        let money = Money::from_minor(1_100, USD);
         let allocated = money.allocate(vec![1, 1, 1]).unwrap();
         let expected_results = vec![
-            Money::from_minor(400, test::USD),
-            Money::from_minor(400, test::USD),
-            Money::from_minor(300, test::USD),
+            Money::from_minor(400, USD),
+            Money::from_minor(400, USD),
+            Money::from_minor(300, USD),
         ];
         assert_eq!(expected_results, allocated);
 
         // Error if the ratio vector is empty
-        let monies = Money::from_minor(100, test::USD).allocate(Vec::new());
+        let monies = Money::from_minor(100, USD).allocate(Vec::new());
         assert_eq!(monies.unwrap_err(), MoneyError::InvalidRatio);
 
         // Error if any ratio is zero
-        let monies = Money::from_minor(100, test::USD).allocate(vec![1, 0]);
+        let monies = Money::from_minor(100, USD).allocate(vec![1, 0]);
         assert_eq!(monies.unwrap_err(), MoneyError::InvalidRatio);
     }
 
     #[test]
     fn money_allocate_to() {
-        let money = Money::from_minor(1_100, test::USD);
+        let money = Money::from_minor(1_100, USD);
         let monies = money.allocate_to(3).unwrap();
         let expected_results = vec![
-            Money::from_minor(400, test::USD),
-            Money::from_minor(400, test::USD),
-            Money::from_minor(300, test::USD),
+            Money::from_minor(400, USD),
+            Money::from_minor(400, USD),
+            Money::from_minor(300, USD),
         ];
         assert_eq!(expected_results, monies);
 
-        let monies = Money::from_minor(100, test::USD).allocate_to(0);
+        let monies = Money::from_minor(100, USD).allocate_to(0);
         assert_eq!(monies.unwrap_err(), MoneyError::InvalidRatio);
     }
 
     #[test]
     fn money_fmt_separates_digits() {
-        let usd = Money::from_minor(0, test::USD); // Zero Dollars
+        let usd = Money::from_minor(0, USD); // Zero Dollars
         let expected_usd_fmt = "$0.00";
         assert_eq!(format!("{}", usd), expected_usd_fmt);
 
-        let usd = Money::from_minor(10_000_000, test::USD); // One Hundred Thousand Dollars
+        let usd = Money::from_minor(10_000_000, USD); // One Hundred Thousand Dollars
         let expected_usd_fmt = "$100,000.00";
         assert_eq!(format!("{}", usd), expected_usd_fmt);
 
-        let usd = Money::from_minor(-10_000_000, test::USD); // - One Hundred Thousand Dollars
+        let usd = Money::from_minor(-10_000_000, USD); // - One Hundred Thousand Dollars
         let expected_usd_fmt = "-$100,000.00";
         assert_eq!(format!("{}", usd), expected_usd_fmt);
 
-        let usd = Money::from_minor(100_000_000_000, test::USD); // 1 Billion Dollars
+        let usd = Money::from_minor(100_000_000_000, USD); // 1 Billion Dollars
         let expected_usd_fmt = "$1,000,000,000.00";
         assert_eq!(format!("{}", usd), expected_usd_fmt);
 
-        let inr = Money::from_minor(10_000_000, test::INR); // 1 Lakh Rupees
+        let inr = Money::from_minor(10_000_000, INR); // 1 Lakh Rupees
         let expected_inr_fmt = "₹1,00,000.00";
         assert_eq!(format!("{}", inr), expected_inr_fmt);
 
-        let inr = Money::from_minor(-1_000_000_000, test::INR); // - 1 Crore Rupees
+        let inr = Money::from_minor(-1_000_000_000, INR); // - 1 Crore Rupees
         let expected_inr_fmt = "-₹1,00,00,000.00";
         assert_eq!(format!("{}", inr), expected_inr_fmt);
     }
 
     #[test]
     fn money_fmt_places_symbols_correctly() {
-        let money = Money::from_minor(0, test::USD);
+        let money = Money::from_minor(0, USD);
         let expected_fmt = "$0.00";
         assert_eq!(format!("{}", money), expected_fmt);
 
-        let money = Money::from_minor(0, test::AED);
+        let money = Money::from_minor(0, AED);
         let expected_fmt = "0.00د.إ";
         assert_eq!(format!("{}", money), expected_fmt);
     }
 
     #[test]
     fn money_fmt_uses_correct_separators() {
-        let money = Money::from_minor(100_000, test::EUR);
+        let money = Money::from_minor(100_000, EUR);
         let expected_fmt = "€1.000,00";
         assert_eq!(format!("{}", money), expected_fmt);
     }
@@ -787,20 +729,20 @@ mod tests {
     #[test]
     // Dividing 20 by 3 rounds to 6.67 in USD and 6.667 in BHD
     fn money_precision_and_rounding() {
-        let expected_money = Money::from_minor(667, test::USD);
-        let mut money = Money::from_minor(2_000, test::USD);
+        let expected_money = Money::from_minor(667, USD);
+        let mut money = Money::from_minor(2_000, USD);
         money /= 3;
         assert_eq!(money.round(2, Round::HalfEven), expected_money);
 
-        let expected_money = Money::from_minor(6_667, test::BHD);
-        let mut money = Money::from_minor(20_000, test::BHD);
+        let expected_money = Money::from_minor(6_667, BHD);
+        let mut money = Money::from_minor(20_000, BHD);
         money /= 3;
         assert_eq!(money.round(3, Round::HalfEven), expected_money);
     }
 
     #[test]
     fn money_ops_uses_impl_copy() {
-        let money = Money::from_major(1, test::USD);
+        let money = Money::from_major(1, USD);
         let _1st_derived_money = money * 3;
         // if Money didn't impl Copy, this second multiplication would result in a compilation error
         // because money would be moved (and consumed) in the 1st multiplication above:

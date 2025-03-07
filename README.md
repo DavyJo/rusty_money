@@ -18,34 +18,7 @@ define your own. The main items exported by the library are `Money` and the `iso
 ## Usage
 
 A `Money` object is created by supplying an amount and a currency. Amounts can be specified in numeric or string types
-but will be stored as precise decimals internally. You can select a bundled currency or make your own. Here's a
-quick example of how you would make your own `Currency` and then create some `Money` with it:
-
-```rust
-use rusty_money::{Money, define_currency_set};
-
-define_currency_set!(
-  video_game {
-    GIL: {
-      code: "GIL",
-      exponent: 2,
-      locale: Locale::EnUs,
-      minor_units: 100,
-      name: "GIL",
-      symbol: "G",
-      symbol_first: true,
-    }
-  }
-);
-
-Money::from_major(2_000, video_game::GIL);              // 2000 GIL
-Money::from_minor(200_000, video_game::GIL);            // 2000 GIL
-Money::from_str("2,000.00", video_game::GIL).unwrap();  // 2000 GIL
-
-// Currencies can be looked up by code.
-let gil = video_game::find("GIL").unwrap();
-Money::from_major(2_000, gil);                          // 2000 GIL
-```
+but will be stored as precise decimals internally.
 
 ## Features: Currency Sets
 

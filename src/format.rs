@@ -126,27 +126,14 @@ impl Default for Params {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::define_currency_set;
-
-    define_currency_set!(
-        test {
-            USD: {
-                code: "USD",
-                exponent: 2,
-                locale: EnUs,
-                minor_units: 100,
-                name: "USD",
-                symbol: "$",
-                symbol_first: true,
-            }
-        }
-    );
+    use crate::find_currency;
+    use crate::iso::USD;
 
     #[test]
     fn format_position() {
-        let _usd = test::find("USD"); // Prevents unused code warnings from the defined module.
+        let _usd = find_currency("USD"); // Prevents unused code warnings from the defined module.
 
-        let money = Money::from_major(-1000, test::USD);
+        let money = Money::from_major(-1000, USD);
 
         // Test that you can position eSpace, Amount, Code, Symbol and Sign in different places
         let params = Params {
@@ -209,15 +196,15 @@ mod tests {
         };
 
         // For 1_000_000
-        let money = Money::from_major(1_000_000, test::USD);
+        let money = Money::from_major(1_000_000, USD);
         assert_eq!("1/000/000", Formatter::money(&money, params.clone()));
 
         // For 1_000
-        let money = Money::from_major(1_000, test::USD);
+        let money = Money::from_major(1_000, USD);
         assert_eq!("1/000", Formatter::money(&money, params.clone()));
 
         // For 0 Chars
-        let money = Money::from_major(0, test::USD);
+        let money = Money::from_major(0, USD);
         assert_eq!("0", Formatter::money(&money, params));
     }
 
@@ -228,13 +215,13 @@ mod tests {
             ..Default::default()
         };
 
-        let money = Money::from_major(10_000_000, test::USD);
+        let money = Money::from_major(10_000_000, USD);
         assert_eq!("1,00,00,000", Formatter::money(&money, params.clone()));
 
-        let money = Money::from_major(100_000, test::USD);
+        let money = Money::from_major(100_000, USD);
         assert_eq!("1,00,000", Formatter::money(&money, params.clone()));
 
-        let money = Money::from_major(1_000, test::USD);
+        let money = Money::from_major(1_000, USD);
         assert_eq!("1,000", Formatter::money(&money, params));
 
         // With a zero sequence
@@ -243,10 +230,10 @@ mod tests {
             ..Default::default()
         };
 
-        let money = Money::from_major(100, test::USD);
+        let money = Money::from_major(100, USD);
         assert_eq!("1,00,", Formatter::money(&money, params.clone()));
 
-        let money = Money::from_major(0, test::USD);
+        let money = Money::from_major(0, USD);
         assert_eq!("0,", Formatter::money(&money, params));
     }
 
@@ -254,7 +241,7 @@ mod tests {
 
     #[test]
     fn format_rounding() {
-        let money = Money::from_minor(1000, test::USD) / 3;
+        let money = Money::from_minor(1000, USD) / 3;
 
         // Rounding = Some (0)
         let params = Params {

@@ -12,7 +12,6 @@
 rusty_money now supports defining your own currencies and has a cryptocurrency module. It no longer depends on lazy_static!,
 is a bit faster and and simpler to use. Many breaking changes were needed to support this, so upgrade with care!
 
-* define_currency_set! allows you to create your own custom currency modules. [@jimpo](https://github.com/jimpo)
 * CryptoCurrencies (Bitcoin, Ethereum) are now available in the `crypto` module.
 * Removed dependency on lazy_static! and made library thread safe.
 
