@@ -1,7 +1,7 @@
 use crate::Currency;
 use crate::Locale::{EnBy, EnEu, EnIn, EnUs};
 
-pub const AED: &'static Currency = &Currency {
+pub const AED: Currency = Currency {
     exponent: 2,
     code: "AED",
     locale: EnUs,
@@ -10,7 +10,7 @@ pub const AED: &'static Currency = &Currency {
     symbol: "د.إ",
     symbol_first: false,
 };
-pub const AFN: &'static Currency = &Currency {
+pub const AFN: Currency = Currency {
     exponent: 2,
     code: "AFN",
     locale: EnUs,
@@ -19,7 +19,7 @@ pub const AFN: &'static Currency = &Currency {
     symbol: "؋",
     symbol_first: false,
 };
-pub const ALL: &'static Currency = &Currency {
+pub const ALL: Currency = Currency {
     exponent: 2,
     code: "ALL",
     locale: EnEu,
@@ -28,7 +28,7 @@ pub const ALL: &'static Currency = &Currency {
     symbol: "L",
     symbol_first: false,
 };
-pub const AMD: &'static Currency = &Currency {
+pub const AMD: Currency = Currency {
     exponent: 2,
     code: "AMD",
     locale: EnUs,
@@ -37,7 +37,7 @@ pub const AMD: &'static Currency = &Currency {
     symbol: "դր.",
     symbol_first: false,
 };
-pub const ANG: &'static Currency = &Currency {
+pub const ANG: Currency = Currency {
     exponent: 2,
     code: "ANG",
     locale: EnUs,
@@ -46,7 +46,7 @@ pub const ANG: &'static Currency = &Currency {
     symbol: "ƒ",
     symbol_first: false,
 };
-pub const AOA: &'static Currency = &Currency {
+pub const AOA: Currency = Currency {
     exponent: 2,
     code: "AOA",
     locale: EnUs,
@@ -55,7 +55,7 @@ pub const AOA: &'static Currency = &Currency {
     symbol: "Kz",
     symbol_first: false,
 };
-pub const ARS: &'static Currency = &Currency {
+pub const ARS: Currency = Currency {
     exponent: 2,
     code: "ARS",
     locale: EnEu,
@@ -64,7 +64,7 @@ pub const ARS: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const AUD: &'static Currency = &Currency {
+pub const AUD: Currency = Currency {
     exponent: 2,
     code: "AUD",
     locale: EnUs,
@@ -73,7 +73,7 @@ pub const AUD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const AWG: &'static Currency = &Currency {
+pub const AWG: Currency = Currency {
     exponent: 2,
     code: "AWG",
     locale: EnUs,
@@ -82,7 +82,7 @@ pub const AWG: &'static Currency = &Currency {
     symbol: "ƒ",
     symbol_first: false,
 };
-pub const AZN: &'static Currency = &Currency {
+pub const AZN: Currency = Currency {
     exponent: 2,
     code: "AZN",
     locale: EnUs,
@@ -91,7 +91,7 @@ pub const AZN: &'static Currency = &Currency {
     symbol: "₼",
     symbol_first: true,
 };
-pub const BAM: &'static Currency = &Currency {
+pub const BAM: Currency = Currency {
     exponent: 2,
     code: "BAM",
     locale: EnUs,
@@ -100,7 +100,7 @@ pub const BAM: &'static Currency = &Currency {
     symbol: "KM",
     symbol_first: true,
 };
-pub const BBD: &'static Currency = &Currency {
+pub const BBD: Currency = Currency {
     exponent: 2,
     code: "BBD",
     locale: EnUs,
@@ -109,7 +109,7 @@ pub const BBD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const BDT: &'static Currency = &Currency {
+pub const BDT: Currency = Currency {
     exponent: 2,
     code: "BDT",
     locale: EnIn,
@@ -118,7 +118,7 @@ pub const BDT: &'static Currency = &Currency {
     symbol: "৳",
     symbol_first: true,
 };
-pub const BGN: &'static Currency = &Currency {
+pub const BGN: Currency = Currency {
     exponent: 2,
     code: "BGN",
     locale: EnIn,
@@ -127,7 +127,7 @@ pub const BGN: &'static Currency = &Currency {
     symbol: "лв.",
     symbol_first: false,
 };
-pub const BHD: &'static Currency = &Currency {
+pub const BHD: Currency = Currency {
     exponent: 3,
     code: "BHD",
     locale: EnUs,
@@ -136,7 +136,7 @@ pub const BHD: &'static Currency = &Currency {
     symbol: "د.ب",
     symbol_first: true,
 };
-pub const BIF: &'static Currency = &Currency {
+pub const BIF: Currency = Currency {
     exponent: 0,
     code: "BIF",
     locale: EnUs,
@@ -145,7 +145,7 @@ pub const BIF: &'static Currency = &Currency {
     symbol: "Fr",
     symbol_first: false,
 };
-pub const BMD: &'static Currency = &Currency {
+pub const BMD: Currency = Currency {
     exponent: 2,
     code: "BMD",
     locale: EnUs,
@@ -154,7 +154,7 @@ pub const BMD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const BND: &'static Currency = &Currency {
+pub const BND: Currency = Currency {
     exponent: 2,
     code: "BND",
     locale: EnUs,
@@ -163,7 +163,7 @@ pub const BND: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const BOB: &'static Currency = &Currency {
+pub const BOB: Currency = Currency {
     exponent: 2,
     code: "BOB",
     locale: EnUs,
@@ -172,7 +172,7 @@ pub const BOB: &'static Currency = &Currency {
     symbol: "Bs.",
     symbol_first: true,
 };
-pub const BRL: &'static Currency = &Currency {
+pub const BRL: Currency = Currency {
     exponent: 2,
     code: "BRL",
     locale: EnUs,
@@ -181,7 +181,7 @@ pub const BRL: &'static Currency = &Currency {
     symbol: "R$",
     symbol_first: true,
 };
-pub const BSD: &'static Currency = &Currency {
+pub const BSD: Currency = Currency {
     exponent: 2,
     code: "BSD",
     locale: EnUs,
@@ -190,7 +190,7 @@ pub const BSD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const BTN: &'static Currency = &Currency {
+pub const BTN: Currency = Currency {
     exponent: 2,
     code: "BTN",
     locale: EnUs,
@@ -199,7 +199,7 @@ pub const BTN: &'static Currency = &Currency {
     symbol: "Nu.",
     symbol_first: false,
 };
-pub const BWP: &'static Currency = &Currency {
+pub const BWP: Currency = Currency {
     exponent: 2,
     code: "BWP",
     locale: EnUs,
@@ -208,7 +208,7 @@ pub const BWP: &'static Currency = &Currency {
     symbol: "P",
     symbol_first: true,
 };
-pub const BYN: &'static Currency = &Currency {
+pub const BYN: Currency = Currency {
     exponent: 2,
     code: "BYN",
     locale: EnBy,
@@ -217,7 +217,7 @@ pub const BYN: &'static Currency = &Currency {
     symbol: "Br",
     symbol_first: false,
 };
-pub const BYR: &'static Currency = &Currency {
+pub const BYR: Currency = Currency {
     exponent: 0,
     code: "BYR",
     locale: EnBy,
@@ -226,7 +226,7 @@ pub const BYR: &'static Currency = &Currency {
     symbol: "Br",
     symbol_first: false,
 };
-pub const BZD: &'static Currency = &Currency {
+pub const BZD: Currency = Currency {
     exponent: 2,
     code: "BZD",
     locale: EnUs,
@@ -235,7 +235,7 @@ pub const BZD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const CAD: &'static Currency = &Currency {
+pub const CAD: Currency = Currency {
     exponent: 2,
     code: "CAD",
     locale: EnUs,
@@ -244,7 +244,7 @@ pub const CAD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const CDF: &'static Currency = &Currency {
+pub const CDF: Currency = Currency {
     exponent: 2,
     code: "CDF",
     locale: EnUs,
@@ -253,7 +253,7 @@ pub const CDF: &'static Currency = &Currency {
     symbol: "Fr",
     symbol_first: false,
 };
-pub const CHF: &'static Currency = &Currency {
+pub const CHF: Currency = Currency {
     exponent: 2,
     code: "CHF",
     locale: EnUs,
@@ -262,7 +262,7 @@ pub const CHF: &'static Currency = &Currency {
     symbol: "Fr",
     symbol_first: true,
 };
-pub const CLF: &'static Currency = &Currency {
+pub const CLF: Currency = Currency {
     exponent: 4,
     code: "CLF",
     locale: EnEu,
@@ -271,7 +271,7 @@ pub const CLF: &'static Currency = &Currency {
     symbol: "UF",
     symbol_first: true,
 };
-pub const CLP: &'static Currency = &Currency {
+pub const CLP: Currency = Currency {
     exponent: 0,
     code: "CLP",
     locale: EnEu,
@@ -280,7 +280,7 @@ pub const CLP: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const CNY: &'static Currency = &Currency {
+pub const CNY: Currency = Currency {
     exponent: 2,
     code: "CNY",
     locale: EnUs,
@@ -289,7 +289,7 @@ pub const CNY: &'static Currency = &Currency {
     symbol: "¥",
     symbol_first: true,
 };
-pub const COP: &'static Currency = &Currency {
+pub const COP: Currency = Currency {
     exponent: 2,
     code: "COP",
     locale: EnEu,
@@ -298,7 +298,7 @@ pub const COP: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const CRC: &'static Currency = &Currency {
+pub const CRC: Currency = Currency {
     exponent: 2,
     code: "CRC",
     locale: EnEu,
@@ -307,7 +307,7 @@ pub const CRC: &'static Currency = &Currency {
     symbol: "₡",
     symbol_first: true,
 };
-pub const CUC: &'static Currency = &Currency {
+pub const CUC: Currency = Currency {
     exponent: 2,
     code: "CUC",
     locale: EnUs,
@@ -316,7 +316,7 @@ pub const CUC: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: false,
 };
-pub const CUP: &'static Currency = &Currency {
+pub const CUP: Currency = Currency {
     exponent: 2,
     code: "CUP",
     locale: EnUs,
@@ -325,7 +325,7 @@ pub const CUP: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const CVE: &'static Currency = &Currency {
+pub const CVE: Currency = Currency {
     exponent: 2,
     code: "CVE",
     locale: EnUs,
@@ -334,7 +334,7 @@ pub const CVE: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: false,
 };
-pub const CZK: &'static Currency = &Currency {
+pub const CZK: Currency = Currency {
     exponent: 2,
     code: "CZK",
     locale: EnBy,
@@ -343,7 +343,7 @@ pub const CZK: &'static Currency = &Currency {
     symbol: "Kč",
     symbol_first: false,
 };
-pub const DJF: &'static Currency = &Currency {
+pub const DJF: Currency = Currency {
     exponent: 0,
     code: "DJF",
     locale: EnUs,
@@ -352,7 +352,7 @@ pub const DJF: &'static Currency = &Currency {
     symbol: "Fdj",
     symbol_first: false,
 };
-pub const DKK: &'static Currency = &Currency {
+pub const DKK: Currency = Currency {
     exponent: 2,
     code: "DKK",
     locale: EnEu,
@@ -361,7 +361,7 @@ pub const DKK: &'static Currency = &Currency {
     symbol: "kr.",
     symbol_first: false,
 };
-pub const DOP: &'static Currency = &Currency {
+pub const DOP: Currency = Currency {
     exponent: 2,
     code: "DOP",
     locale: EnUs,
@@ -370,7 +370,7 @@ pub const DOP: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const DZD: &'static Currency = &Currency {
+pub const DZD: Currency = Currency {
     exponent: 2,
     code: "DZD",
     locale: EnUs,
@@ -379,7 +379,7 @@ pub const DZD: &'static Currency = &Currency {
     symbol: "د.ج",
     symbol_first: false,
 };
-pub const EGP: &'static Currency = &Currency {
+pub const EGP: Currency = Currency {
     exponent: 2,
     code: "EGP",
     locale: EnUs,
@@ -388,7 +388,7 @@ pub const EGP: &'static Currency = &Currency {
     symbol: "ج.م",
     symbol_first: true,
 };
-pub const ERN: &'static Currency = &Currency {
+pub const ERN: Currency = Currency {
     exponent: 2,
     code: "ERN",
     locale: EnUs,
@@ -397,7 +397,7 @@ pub const ERN: &'static Currency = &Currency {
     symbol: "Nfk",
     symbol_first: false,
 };
-pub const ETB: &'static Currency = &Currency {
+pub const ETB: Currency = Currency {
     exponent: 2,
     code: "ETB",
     locale: EnUs,
@@ -406,7 +406,7 @@ pub const ETB: &'static Currency = &Currency {
     symbol: "Br",
     symbol_first: false,
 };
-pub const EUR: &'static Currency = &Currency {
+pub const EUR: Currency = Currency {
     exponent: 2,
     code: "EUR",
     locale: EnEu,
@@ -415,7 +415,7 @@ pub const EUR: &'static Currency = &Currency {
     symbol: "€",
     symbol_first: true,
 };
-pub const FJD: &'static Currency = &Currency {
+pub const FJD: Currency = Currency {
     exponent: 2,
     code: "FJD",
     locale: EnEu,
@@ -424,7 +424,7 @@ pub const FJD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: false,
 };
-pub const FKP: &'static Currency = &Currency {
+pub const FKP: Currency = Currency {
     exponent: 2,
     code: "FKP",
     locale: EnEu,
@@ -433,7 +433,7 @@ pub const FKP: &'static Currency = &Currency {
     symbol: "£",
     symbol_first: false,
 };
-pub const GBP: &'static Currency = &Currency {
+pub const GBP: Currency = Currency {
     exponent: 2,
     code: "GBP",
     locale: EnUs,
@@ -442,7 +442,7 @@ pub const GBP: &'static Currency = &Currency {
     symbol: "£",
     symbol_first: true,
 };
-pub const GEL: &'static Currency = &Currency {
+pub const GEL: Currency = Currency {
     exponent: 2,
     code: "GEL",
     locale: EnUs,
@@ -451,7 +451,7 @@ pub const GEL: &'static Currency = &Currency {
     symbol: "ლ",
     symbol_first: false,
 };
-pub const GHS: &'static Currency = &Currency {
+pub const GHS: Currency = Currency {
     exponent: 2,
     code: "GHS",
     locale: EnUs,
@@ -460,7 +460,7 @@ pub const GHS: &'static Currency = &Currency {
     symbol: "₵",
     symbol_first: true,
 };
-pub const GIP: &'static Currency = &Currency {
+pub const GIP: Currency = Currency {
     exponent: 2,
     code: "GIP",
     locale: EnUs,
@@ -469,7 +469,7 @@ pub const GIP: &'static Currency = &Currency {
     symbol: "£",
     symbol_first: true,
 };
-pub const GMD: &'static Currency = &Currency {
+pub const GMD: Currency = Currency {
     exponent: 2,
     code: "GMD",
     locale: EnUs,
@@ -478,7 +478,7 @@ pub const GMD: &'static Currency = &Currency {
     symbol: "D",
     symbol_first: false,
 };
-pub const GNF: &'static Currency = &Currency {
+pub const GNF: Currency = Currency {
     exponent: 0,
     code: "GNF",
     locale: EnUs,
@@ -487,7 +487,7 @@ pub const GNF: &'static Currency = &Currency {
     symbol: "Fr",
     symbol_first: false,
 };
-pub const GTQ: &'static Currency = &Currency {
+pub const GTQ: Currency = Currency {
     exponent: 2,
     code: "GTQ",
     locale: EnUs,
@@ -496,7 +496,7 @@ pub const GTQ: &'static Currency = &Currency {
     symbol: "Q",
     symbol_first: true,
 };
-pub const GYD: &'static Currency = &Currency {
+pub const GYD: Currency = Currency {
     exponent: 2,
     code: "GYD",
     locale: EnUs,
@@ -505,7 +505,7 @@ pub const GYD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: false,
 };
-pub const HKD: &'static Currency = &Currency {
+pub const HKD: Currency = Currency {
     exponent: 2,
     code: "HKD",
     locale: EnUs,
@@ -514,7 +514,7 @@ pub const HKD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const HNL: &'static Currency = &Currency {
+pub const HNL: Currency = Currency {
     exponent: 2,
     code: "HNL",
     locale: EnUs,
@@ -523,7 +523,7 @@ pub const HNL: &'static Currency = &Currency {
     symbol: "L",
     symbol_first: true,
 };
-pub const HRK: &'static Currency = &Currency {
+pub const HRK: Currency = Currency {
     exponent: 2,
     code: "HRK",
     locale: EnEu,
@@ -532,7 +532,7 @@ pub const HRK: &'static Currency = &Currency {
     symbol: "kn",
     symbol_first: false,
 };
-pub const HTG: &'static Currency = &Currency {
+pub const HTG: Currency = Currency {
     exponent: 2,
     code: "HTG",
     locale: EnUs,
@@ -541,7 +541,7 @@ pub const HTG: &'static Currency = &Currency {
     symbol: "G",
     symbol_first: false,
 };
-pub const HUF: &'static Currency = &Currency {
+pub const HUF: Currency = Currency {
     exponent: 0,
     code: "HUF",
     locale: EnBy,
@@ -550,7 +550,7 @@ pub const HUF: &'static Currency = &Currency {
     symbol: "Ft",
     symbol_first: false,
 };
-pub const IDR: &'static Currency = &Currency {
+pub const IDR: Currency = Currency {
     exponent: 2,
     code: "IDR",
     locale: EnUs,
@@ -559,7 +559,7 @@ pub const IDR: &'static Currency = &Currency {
     symbol: "Rp",
     symbol_first: true,
 };
-pub const ILS: &'static Currency = &Currency {
+pub const ILS: Currency = Currency {
     exponent: 2,
     code: "ILS",
     locale: EnUs,
@@ -568,7 +568,7 @@ pub const ILS: &'static Currency = &Currency {
     symbol: "₪",
     symbol_first: true,
 };
-pub const INR: &'static Currency = &Currency {
+pub const INR: Currency = Currency {
     exponent: 2,
     code: "INR",
     locale: EnIn,
@@ -577,7 +577,7 @@ pub const INR: &'static Currency = &Currency {
     symbol: "₹",
     symbol_first: true,
 };
-pub const IQD: &'static Currency = &Currency {
+pub const IQD: Currency = Currency {
     exponent: 3,
     code: "IQD",
     locale: EnUs,
@@ -586,7 +586,7 @@ pub const IQD: &'static Currency = &Currency {
     symbol: "ع.د",
     symbol_first: false,
 };
-pub const IRR: &'static Currency = &Currency {
+pub const IRR: Currency = Currency {
     exponent: 2,
     code: "IRR",
     locale: EnUs,
@@ -595,7 +595,7 @@ pub const IRR: &'static Currency = &Currency {
     symbol: "﷼",
     symbol_first: true,
 };
-pub const ISK: &'static Currency = &Currency {
+pub const ISK: Currency = Currency {
     exponent: 0,
     code: "ISK",
     locale: EnEu,
@@ -604,7 +604,7 @@ pub const ISK: &'static Currency = &Currency {
     symbol: "kr.",
     symbol_first: true,
 };
-pub const JMD: &'static Currency = &Currency {
+pub const JMD: Currency = Currency {
     exponent: 2,
     code: "JMD",
     locale: EnUs,
@@ -613,7 +613,7 @@ pub const JMD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const JOD: &'static Currency = &Currency {
+pub const JOD: Currency = Currency {
     exponent: 3,
     code: "JOD",
     locale: EnUs,
@@ -622,7 +622,7 @@ pub const JOD: &'static Currency = &Currency {
     symbol: "د.ا",
     symbol_first: true,
 };
-pub const JPY: &'static Currency = &Currency {
+pub const JPY: Currency = Currency {
     exponent: 0,
     code: "JPY",
     locale: EnUs,
@@ -631,7 +631,7 @@ pub const JPY: &'static Currency = &Currency {
     symbol: "¥",
     symbol_first: true,
 };
-pub const KES: &'static Currency = &Currency {
+pub const KES: Currency = Currency {
     exponent: 2,
     code: "KES",
     locale: EnUs,
@@ -640,7 +640,7 @@ pub const KES: &'static Currency = &Currency {
     symbol: "KSh",
     symbol_first: true,
 };
-pub const KGS: &'static Currency = &Currency {
+pub const KGS: Currency = Currency {
     exponent: 2,
     code: "KGS",
     locale: EnUs,
@@ -649,7 +649,7 @@ pub const KGS: &'static Currency = &Currency {
     symbol: "som",
     symbol_first: false,
 };
-pub const KHR: &'static Currency = &Currency {
+pub const KHR: Currency = Currency {
     exponent: 2,
     code: "KHR",
     locale: EnUs,
@@ -658,7 +658,7 @@ pub const KHR: &'static Currency = &Currency {
     symbol: "៛",
     symbol_first: false,
 };
-pub const KMF: &'static Currency = &Currency {
+pub const KMF: Currency = Currency {
     exponent: 0,
     code: "KMF",
     locale: EnUs,
@@ -667,7 +667,7 @@ pub const KMF: &'static Currency = &Currency {
     symbol: "Fr",
     symbol_first: false,
 };
-pub const KPW: &'static Currency = &Currency {
+pub const KPW: Currency = Currency {
     exponent: 2,
     code: "KPW",
     locale: EnUs,
@@ -676,7 +676,7 @@ pub const KPW: &'static Currency = &Currency {
     symbol: "₩",
     symbol_first: false,
 };
-pub const KRW: &'static Currency = &Currency {
+pub const KRW: Currency = Currency {
     exponent: 0,
     code: "KRW",
     locale: EnUs,
@@ -685,7 +685,7 @@ pub const KRW: &'static Currency = &Currency {
     symbol: "₩",
     symbol_first: true,
 };
-pub const KWD: &'static Currency = &Currency {
+pub const KWD: Currency = Currency {
     exponent: 3,
     code: "KWD",
     locale: EnUs,
@@ -694,7 +694,7 @@ pub const KWD: &'static Currency = &Currency {
     symbol: "د.ك",
     symbol_first: true,
 };
-pub const KYD: &'static Currency = &Currency {
+pub const KYD: Currency = Currency {
     exponent: 2,
     code: "KYD",
     locale: EnUs,
@@ -703,7 +703,7 @@ pub const KYD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const KZT: &'static Currency = &Currency {
+pub const KZT: Currency = Currency {
     exponent: 2,
     code: "KZT",
     locale: EnUs,
@@ -712,7 +712,7 @@ pub const KZT: &'static Currency = &Currency {
     symbol: "₸",
     symbol_first: false,
 };
-pub const LAK: &'static Currency = &Currency {
+pub const LAK: Currency = Currency {
     exponent: 2,
     code: "LAK",
     locale: EnUs,
@@ -721,7 +721,7 @@ pub const LAK: &'static Currency = &Currency {
     symbol: "₭",
     symbol_first: false,
 };
-pub const LBP: &'static Currency = &Currency {
+pub const LBP: Currency = Currency {
     exponent: 2,
     code: "LBP",
     locale: EnUs,
@@ -730,7 +730,7 @@ pub const LBP: &'static Currency = &Currency {
     symbol: "ل.ل",
     symbol_first: true,
 };
-pub const LKR: &'static Currency = &Currency {
+pub const LKR: Currency = Currency {
     exponent: 2,
     code: "LKR",
     locale: EnUs,
@@ -739,7 +739,7 @@ pub const LKR: &'static Currency = &Currency {
     symbol: "₨",
     symbol_first: false,
 };
-pub const LRD: &'static Currency = &Currency {
+pub const LRD: Currency = Currency {
     exponent: 2,
     code: "LRD",
     locale: EnUs,
@@ -748,7 +748,7 @@ pub const LRD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: false,
 };
-pub const LSL: &'static Currency = &Currency {
+pub const LSL: Currency = Currency {
     exponent: 2,
     code: "LSL",
     locale: EnUs,
@@ -757,7 +757,7 @@ pub const LSL: &'static Currency = &Currency {
     symbol: "L",
     symbol_first: false,
 };
-pub const LYD: &'static Currency = &Currency {
+pub const LYD: Currency = Currency {
     exponent: 3,
     code: "LYD",
     locale: EnUs,
@@ -766,7 +766,7 @@ pub const LYD: &'static Currency = &Currency {
     symbol: "ل.د",
     symbol_first: false,
 };
-pub const MAD: &'static Currency = &Currency {
+pub const MAD: Currency = Currency {
     exponent: 2,
     code: "MAD",
     locale: EnUs,
@@ -775,7 +775,7 @@ pub const MAD: &'static Currency = &Currency {
     symbol: "د.م.",
     symbol_first: false,
 };
-pub const MDL: &'static Currency = &Currency {
+pub const MDL: Currency = Currency {
     exponent: 2,
     code: "MDL",
     locale: EnUs,
@@ -784,7 +784,7 @@ pub const MDL: &'static Currency = &Currency {
     symbol: "L",
     symbol_first: false,
 };
-pub const MGA: &'static Currency = &Currency {
+pub const MGA: Currency = Currency {
     exponent: 1, // TODO - exponent is 1/5th need to represent somehow
     code: "MGA",
     locale: EnUs,
@@ -793,7 +793,7 @@ pub const MGA: &'static Currency = &Currency {
     symbol: "Ar",
     symbol_first: true,
 };
-pub const MKD: &'static Currency = &Currency {
+pub const MKD: Currency = Currency {
     exponent: 2,
     code: "MKD",
     locale: EnUs,
@@ -802,7 +802,7 @@ pub const MKD: &'static Currency = &Currency {
     symbol: "ден",
     symbol_first: false,
 };
-pub const MMK: &'static Currency = &Currency {
+pub const MMK: Currency = Currency {
     exponent: 2,
     code: "MMK",
     locale: EnUs,
@@ -811,7 +811,7 @@ pub const MMK: &'static Currency = &Currency {
     symbol: "K",
     symbol_first: false,
 };
-pub const MNT: &'static Currency = &Currency {
+pub const MNT: Currency = Currency {
     exponent: 2,
     code: "MNT",
     locale: EnUs,
@@ -820,7 +820,7 @@ pub const MNT: &'static Currency = &Currency {
     symbol: "₮",
     symbol_first: false,
 };
-pub const MOP: &'static Currency = &Currency {
+pub const MOP: Currency = Currency {
     exponent: 2,
     code: "MOP",
     locale: EnUs,
@@ -829,7 +829,7 @@ pub const MOP: &'static Currency = &Currency {
     symbol: "P",
     symbol_first: false,
 };
-pub const MRU: &'static Currency = &Currency {
+pub const MRU: Currency = Currency {
     exponent: 1, // TODO - exponent problem of 5
     code: "MRU",
     locale: EnUs,
@@ -838,7 +838,7 @@ pub const MRU: &'static Currency = &Currency {
     symbol: "UM",
     symbol_first: false,
 };
-pub const MUR: &'static Currency = &Currency {
+pub const MUR: Currency = Currency {
     exponent: 2,
     code: "MUR",
     locale: EnUs,
@@ -847,7 +847,7 @@ pub const MUR: &'static Currency = &Currency {
     symbol: "₨",
     symbol_first: true,
 };
-pub const MVR: &'static Currency = &Currency {
+pub const MVR: Currency = Currency {
     exponent: 2,
     code: "MVR",
     locale: EnUs,
@@ -856,7 +856,7 @@ pub const MVR: &'static Currency = &Currency {
     symbol: "MVR",
     symbol_first: false,
 };
-pub const MWK: &'static Currency = &Currency {
+pub const MWK: Currency = Currency {
     exponent: 2,
     code: "MWK",
     locale: EnUs,
@@ -865,7 +865,7 @@ pub const MWK: &'static Currency = &Currency {
     symbol: "MK",
     symbol_first: false,
 };
-pub const MXN: &'static Currency = &Currency {
+pub const MXN: Currency = Currency {
     exponent: 2,
     code: "MXN",
     locale: EnUs,
@@ -874,7 +874,7 @@ pub const MXN: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const MYR: &'static Currency = &Currency {
+pub const MYR: Currency = Currency {
     exponent: 2,
     code: "MYR",
     locale: EnUs,
@@ -883,7 +883,7 @@ pub const MYR: &'static Currency = &Currency {
     symbol: "RM",
     symbol_first: true,
 };
-pub const MZN: &'static Currency = &Currency {
+pub const MZN: Currency = Currency {
     exponent: 2,
     code: "MZN",
     locale: EnUs,
@@ -892,7 +892,7 @@ pub const MZN: &'static Currency = &Currency {
     symbol: "MTn",
     symbol_first: true,
 };
-pub const NAD: &'static Currency = &Currency {
+pub const NAD: Currency = Currency {
     exponent: 2,
     code: "NAD",
     locale: EnUs,
@@ -901,7 +901,7 @@ pub const NAD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: false,
 };
-pub const NGN: &'static Currency = &Currency {
+pub const NGN: Currency = Currency {
     exponent: 2,
     code: "NGN",
     locale: EnUs,
@@ -910,7 +910,7 @@ pub const NGN: &'static Currency = &Currency {
     symbol: "₦",
     symbol_first: true,
 };
-pub const NIO: &'static Currency = &Currency {
+pub const NIO: Currency = Currency {
     exponent: 2,
     code: "NIO",
     locale: EnUs,
@@ -919,7 +919,7 @@ pub const NIO: &'static Currency = &Currency {
     symbol: "C$",
     symbol_first: true,
 };
-pub const NOK: &'static Currency = &Currency {
+pub const NOK: Currency = Currency {
     exponent: 2,
     code: "NOK",
     locale: EnUs,
@@ -928,7 +928,7 @@ pub const NOK: &'static Currency = &Currency {
     symbol: "kr",
     symbol_first: false,
 };
-pub const NPR: &'static Currency = &Currency {
+pub const NPR: Currency = Currency {
     exponent: 2,
     code: "NPR",
     locale: EnUs,
@@ -937,7 +937,7 @@ pub const NPR: &'static Currency = &Currency {
     symbol: "रु",
     symbol_first: true,
 };
-pub const NZD: &'static Currency = &Currency {
+pub const NZD: Currency = Currency {
     exponent: 2,
     code: "NZD",
     locale: EnUs,
@@ -946,7 +946,7 @@ pub const NZD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const OMR: &'static Currency = &Currency {
+pub const OMR: Currency = Currency {
     exponent: 3,
     code: "OMR",
     locale: EnUs,
@@ -955,7 +955,7 @@ pub const OMR: &'static Currency = &Currency {
     symbol: "ر.ع.",
     symbol_first: true,
 };
-pub const PAB: &'static Currency = &Currency {
+pub const PAB: Currency = Currency {
     exponent: 2,
     code: "PAB",
     locale: EnUs,
@@ -964,7 +964,7 @@ pub const PAB: &'static Currency = &Currency {
     symbol: "B/.",
     symbol_first: true,
 };
-pub const PEN: &'static Currency = &Currency {
+pub const PEN: Currency = Currency {
     exponent: 2,
     code: "PEN",
     locale: EnUs,
@@ -973,7 +973,7 @@ pub const PEN: &'static Currency = &Currency {
     symbol: "S/",
     symbol_first: true,
 };
-pub const PGK: &'static Currency = &Currency {
+pub const PGK: Currency = Currency {
     exponent: 2,
     code: "PGK",
     locale: EnUs,
@@ -982,7 +982,7 @@ pub const PGK: &'static Currency = &Currency {
     symbol: "K",
     symbol_first: false,
 };
-pub const PHP: &'static Currency = &Currency {
+pub const PHP: Currency = Currency {
     exponent: 2,
     code: "PHP",
     locale: EnUs,
@@ -991,7 +991,7 @@ pub const PHP: &'static Currency = &Currency {
     symbol: "₱",
     symbol_first: true,
 };
-pub const PKR: &'static Currency = &Currency {
+pub const PKR: Currency = Currency {
     exponent: 2,
     code: "PKR",
     locale: EnUs,
@@ -1000,7 +1000,7 @@ pub const PKR: &'static Currency = &Currency {
     symbol: "₨",
     symbol_first: true,
 };
-pub const PLN: &'static Currency = &Currency {
+pub const PLN: Currency = Currency {
     exponent: 2,
     code: "PLN",
     locale: EnBy,
@@ -1009,7 +1009,7 @@ pub const PLN: &'static Currency = &Currency {
     symbol: "zł",
     symbol_first: false,
 };
-pub const PYG: &'static Currency = &Currency {
+pub const PYG: Currency = Currency {
     exponent: 0,
     code: "PYG",
     locale: EnBy,
@@ -1018,7 +1018,7 @@ pub const PYG: &'static Currency = &Currency {
     symbol: "₲",
     symbol_first: true,
 };
-pub const QAR: &'static Currency = &Currency {
+pub const QAR: Currency = Currency {
     exponent: 2,
     code: "QAR",
     locale: EnBy,
@@ -1027,7 +1027,7 @@ pub const QAR: &'static Currency = &Currency {
     symbol: "ر.ق",
     symbol_first: false,
 };
-pub const RON: &'static Currency = &Currency {
+pub const RON: Currency = Currency {
     exponent: 2,
     code: "RON",
     locale: EnEu,
@@ -1036,7 +1036,7 @@ pub const RON: &'static Currency = &Currency {
     symbol: "RON",
     symbol_first: false,
 };
-pub const ROL: &'static Currency = &Currency {
+pub const ROL: Currency = Currency {
     exponent: 0,
     code: "ROL",
     locale: EnEu,
@@ -1045,7 +1045,7 @@ pub const ROL: &'static Currency = &Currency {
     symbol: "ROL",
     symbol_first: false,
 };
-pub const RSD: &'static Currency = &Currency {
+pub const RSD: Currency = Currency {
     exponent: 2,
     code: "RSD",
     locale: EnUs,
@@ -1054,7 +1054,7 @@ pub const RSD: &'static Currency = &Currency {
     symbol: "РСД",
     symbol_first: true,
 };
-pub const RUB: &'static Currency = &Currency {
+pub const RUB: Currency = Currency {
     exponent: 2,
     code: "RUB",
     locale: EnEu,
@@ -1063,7 +1063,7 @@ pub const RUB: &'static Currency = &Currency {
     symbol: "₽",
     symbol_first: false,
 };
-pub const RWF: &'static Currency = &Currency {
+pub const RWF: Currency = Currency {
     exponent: 0,
     code: "RWF",
     locale: EnUs,
@@ -1072,7 +1072,7 @@ pub const RWF: &'static Currency = &Currency {
     symbol: "FRw",
     symbol_first: false,
 };
-pub const SAR: &'static Currency = &Currency {
+pub const SAR: Currency = Currency {
     exponent: 2,
     code: "SAR",
     locale: EnUs,
@@ -1081,7 +1081,7 @@ pub const SAR: &'static Currency = &Currency {
     symbol: "ر.س",
     symbol_first: true,
 };
-pub const SBD: &'static Currency = &Currency {
+pub const SBD: Currency = Currency {
     exponent: 2,
     code: "SBD",
     locale: EnUs,
@@ -1090,7 +1090,7 @@ pub const SBD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: false,
 };
-pub const SCR: &'static Currency = &Currency {
+pub const SCR: Currency = Currency {
     exponent: 2,
     code: "SCR",
     locale: EnUs,
@@ -1099,7 +1099,7 @@ pub const SCR: &'static Currency = &Currency {
     symbol: "₨",
     symbol_first: false,
 };
-pub const SDG: &'static Currency = &Currency {
+pub const SDG: Currency = Currency {
     exponent: 2,
     code: "SDG",
     locale: EnUs,
@@ -1108,7 +1108,7 @@ pub const SDG: &'static Currency = &Currency {
     symbol: "£",
     symbol_first: true,
 };
-pub const SEK: &'static Currency = &Currency {
+pub const SEK: Currency = Currency {
     exponent: 2,
     code: "SEK",
     locale: EnBy,
@@ -1117,7 +1117,7 @@ pub const SEK: &'static Currency = &Currency {
     symbol: "kr",
     symbol_first: false,
 };
-pub const SGD: &'static Currency = &Currency {
+pub const SGD: Currency = Currency {
     exponent: 2,
     code: "SGD",
     locale: EnUs,
@@ -1126,7 +1126,7 @@ pub const SGD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const SHP: &'static Currency = &Currency {
+pub const SHP: Currency = Currency {
     exponent: 2,
     code: "SHP",
     locale: EnUs,
@@ -1135,7 +1135,7 @@ pub const SHP: &'static Currency = &Currency {
     symbol: "£",
     symbol_first: false,
 };
-pub const SKK: &'static Currency = &Currency {
+pub const SKK: Currency = Currency {
     exponent: 2,
     code: "SKK",
     locale: EnUs,
@@ -1144,7 +1144,7 @@ pub const SKK: &'static Currency = &Currency {
     symbol: "Sk",
     symbol_first: true,
 };
-pub const SLE: &'static Currency = &Currency {
+pub const SLE: Currency = Currency {
     exponent: 2,
     code: "SLE",
     locale: EnUs,
@@ -1153,7 +1153,7 @@ pub const SLE: &'static Currency = &Currency {
     symbol: "Le",
     symbol_first: false,
 };
-pub const SLL: &'static Currency = &Currency {
+pub const SLL: Currency = Currency {
     exponent: 2,
     code: "SLL",
     locale: EnUs,
@@ -1162,7 +1162,7 @@ pub const SLL: &'static Currency = &Currency {
     symbol: "Le",
     symbol_first: false,
 };
-pub const SOS: &'static Currency = &Currency {
+pub const SOS: Currency = Currency {
     exponent: 2,
     code: "SOS",
     locale: EnUs,
@@ -1171,7 +1171,7 @@ pub const SOS: &'static Currency = &Currency {
     symbol: "Sh",
     symbol_first: false,
 };
-pub const SRD: &'static Currency = &Currency {
+pub const SRD: Currency = Currency {
     exponent: 2,
     code: "SRD",
     locale: EnUs,
@@ -1180,7 +1180,7 @@ pub const SRD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: false,
 };
-pub const SSP: &'static Currency = &Currency {
+pub const SSP: Currency = Currency {
     exponent: 2,
     code: "SSP",
     locale: EnUs,
@@ -1189,7 +1189,7 @@ pub const SSP: &'static Currency = &Currency {
     symbol: "£",
     symbol_first: false,
 };
-pub const STD: &'static Currency = &Currency {
+pub const STD: Currency = Currency {
     exponent: 2,
     code: "STD",
     locale: EnUs,
@@ -1198,7 +1198,7 @@ pub const STD: &'static Currency = &Currency {
     symbol: "Db",
     symbol_first: false,
 };
-pub const STN: &'static Currency = &Currency {
+pub const STN: Currency = Currency {
     exponent: 2,
     code: "STN",
     locale: EnUs,
@@ -1207,7 +1207,7 @@ pub const STN: &'static Currency = &Currency {
     symbol: "Db",
     symbol_first: false,
 };
-pub const SVC: &'static Currency = &Currency {
+pub const SVC: Currency = Currency {
     exponent: 2,
     code: "SVC",
     locale: EnUs,
@@ -1216,7 +1216,7 @@ pub const SVC: &'static Currency = &Currency {
     symbol: "₡",
     symbol_first: true,
 };
-pub const SYP: &'static Currency = &Currency {
+pub const SYP: Currency = Currency {
     exponent: 2,
     code: "SYP",
     locale: EnUs,
@@ -1225,7 +1225,7 @@ pub const SYP: &'static Currency = &Currency {
     symbol: "£S",
     symbol_first: false,
 };
-pub const SZL: &'static Currency = &Currency {
+pub const SZL: Currency = Currency {
     exponent: 2,
     code: "SZL",
     locale: EnUs,
@@ -1234,7 +1234,7 @@ pub const SZL: &'static Currency = &Currency {
     symbol: "E",
     symbol_first: true,
 };
-pub const THB: &'static Currency = &Currency {
+pub const THB: Currency = Currency {
     exponent: 2,
     code: "THB",
     locale: EnUs,
@@ -1243,7 +1243,7 @@ pub const THB: &'static Currency = &Currency {
     symbol: "฿",
     symbol_first: true,
 };
-pub const TJS: &'static Currency = &Currency {
+pub const TJS: Currency = Currency {
     exponent: 2,
     code: "TJS",
     locale: EnUs,
@@ -1252,7 +1252,7 @@ pub const TJS: &'static Currency = &Currency {
     symbol: "ЅМ",
     symbol_first: false,
 };
-pub const TMT: &'static Currency = &Currency {
+pub const TMT: Currency = Currency {
     exponent: 2,
     code: "TMT",
     locale: EnUs,
@@ -1261,7 +1261,7 @@ pub const TMT: &'static Currency = &Currency {
     symbol: "T",
     symbol_first: false,
 };
-pub const TND: &'static Currency = &Currency {
+pub const TND: Currency = Currency {
     exponent: 3,
     code: "TND",
     locale: EnUs,
@@ -1270,7 +1270,7 @@ pub const TND: &'static Currency = &Currency {
     symbol: "د.ت",
     symbol_first: false,
 };
-pub const TOP: &'static Currency = &Currency {
+pub const TOP: Currency = Currency {
     exponent: 2,
     code: "TOP",
     locale: EnUs,
@@ -1279,7 +1279,7 @@ pub const TOP: &'static Currency = &Currency {
     symbol: "T$",
     symbol_first: true,
 };
-pub const TRY: &'static Currency = &Currency {
+pub const TRY: Currency = Currency {
     exponent: 2,
     code: "TRY",
     locale: EnEu,
@@ -1288,7 +1288,7 @@ pub const TRY: &'static Currency = &Currency {
     symbol: "₺",
     symbol_first: true,
 };
-pub const TTD: &'static Currency = &Currency {
+pub const TTD: Currency = Currency {
     exponent: 2,
     code: "TTD",
     locale: EnUs,
@@ -1297,7 +1297,7 @@ pub const TTD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: false,
 };
-pub const TWD: &'static Currency = &Currency {
+pub const TWD: Currency = Currency {
     exponent: 2,
     code: "TWD",
     locale: EnUs,
@@ -1306,7 +1306,7 @@ pub const TWD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const TZS: &'static Currency = &Currency {
+pub const TZS: Currency = Currency {
     exponent: 2,
     code: "TZS",
     locale: EnUs,
@@ -1315,7 +1315,7 @@ pub const TZS: &'static Currency = &Currency {
     symbol: "Sh",
     symbol_first: true,
 };
-pub const UAH: &'static Currency = &Currency {
+pub const UAH: Currency = Currency {
     exponent: 2,
     code: "UAH",
     locale: EnUs,
@@ -1324,7 +1324,7 @@ pub const UAH: &'static Currency = &Currency {
     symbol: "₴",
     symbol_first: false,
 };
-pub const UGX: &'static Currency = &Currency {
+pub const UGX: Currency = Currency {
     exponent: 0,
     code: "UGX",
     locale: EnUs,
@@ -1333,7 +1333,7 @@ pub const UGX: &'static Currency = &Currency {
     symbol: "USh",
     symbol_first: false,
 };
-pub const USD: &'static Currency = &Currency {
+pub const USD: Currency = Currency {
     exponent: 2,
     code: "USD",
     locale: EnUs,
@@ -1342,7 +1342,7 @@ pub const USD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const UYU: &'static Currency = &Currency {
+pub const UYU: Currency = Currency {
     exponent: 2,
     code: "UYU",
     locale: EnEu,
@@ -1351,7 +1351,7 @@ pub const UYU: &'static Currency = &Currency {
     symbol: "$U",
     symbol_first: true,
 };
-pub const UYW: &'static Currency = &Currency {
+pub const UYW: Currency = Currency {
     exponent: 4,
     code: "UYW",
     locale: EnEu,
@@ -1360,7 +1360,7 @@ pub const UYW: &'static Currency = &Currency {
     symbol: "UP",
     symbol_first: true,
 };
-pub const UZS: &'static Currency = &Currency {
+pub const UZS: Currency = Currency {
     exponent: 2,
     code: "UZS",
     locale: EnUs,
@@ -1369,7 +1369,7 @@ pub const UZS: &'static Currency = &Currency {
     symbol: "so'm",
     symbol_first: false,
 };
-pub const VES: &'static Currency = &Currency {
+pub const VES: Currency = Currency {
     exponent: 2,
     code: "VES",
     locale: EnEu,
@@ -1378,7 +1378,7 @@ pub const VES: &'static Currency = &Currency {
     symbol: "Bs",
     symbol_first: true,
 };
-pub const VND: &'static Currency = &Currency {
+pub const VND: Currency = Currency {
     exponent: 0,
     code: "VND",
     locale: EnEu,
@@ -1387,7 +1387,7 @@ pub const VND: &'static Currency = &Currency {
     symbol: "₫",
     symbol_first: false,
 };
-pub const VUV: &'static Currency = &Currency {
+pub const VUV: Currency = Currency {
     exponent: 0,
     code: "VUV",
     locale: EnUs,
@@ -1396,7 +1396,7 @@ pub const VUV: &'static Currency = &Currency {
     symbol: "Vt",
     symbol_first: true,
 };
-pub const WST: &'static Currency = &Currency {
+pub const WST: Currency = Currency {
     exponent: 2,
     code: "WST",
     locale: EnUs,
@@ -1405,7 +1405,7 @@ pub const WST: &'static Currency = &Currency {
     symbol: "T",
     symbol_first: false,
 };
-pub const XAF: &'static Currency = &Currency {
+pub const XAF: Currency = Currency {
     exponent: 0,
     code: "XAF",
     locale: EnUs,
@@ -1414,7 +1414,7 @@ pub const XAF: &'static Currency = &Currency {
     symbol: "CFA",
     symbol_first: false,
 };
-pub const XAG: &'static Currency = &Currency {
+pub const XAG: Currency = Currency {
     exponent: 0,
     code: "XAG",
     locale: EnUs,
@@ -1423,7 +1423,7 @@ pub const XAG: &'static Currency = &Currency {
     symbol: "oz t",
     symbol_first: false,
 };
-pub const XAU: &'static Currency = &Currency {
+pub const XAU: Currency = Currency {
     exponent: 0,
     code: "XAU",
     locale: EnUs,
@@ -1432,7 +1432,7 @@ pub const XAU: &'static Currency = &Currency {
     symbol: "oz t",
     symbol_first: false,
 };
-pub const XBA: &'static Currency = &Currency {
+pub const XBA: Currency = Currency {
     exponent: 0,
     code: "XBA",
     locale: EnUs,
@@ -1441,7 +1441,7 @@ pub const XBA: &'static Currency = &Currency {
     symbol: "",
     symbol_first: false,
 };
-pub const XBB: &'static Currency = &Currency {
+pub const XBB: Currency = Currency {
     exponent: 0,
     code: "XBB",
     locale: EnUs,
@@ -1450,7 +1450,7 @@ pub const XBB: &'static Currency = &Currency {
     symbol: "",
     symbol_first: false,
 };
-pub const XBC: &'static Currency = &Currency {
+pub const XBC: Currency = Currency {
     exponent: 0,
     code: "XBC",
     locale: EnUs,
@@ -1459,7 +1459,7 @@ pub const XBC: &'static Currency = &Currency {
     symbol: "",
     symbol_first: false,
 };
-pub const XBD: &'static Currency = &Currency {
+pub const XBD: Currency = Currency {
     exponent: 0,
     code: "XBD",
     locale: EnUs,
@@ -1468,7 +1468,7 @@ pub const XBD: &'static Currency = &Currency {
     symbol: "",
     symbol_first: false,
 };
-pub const XCD: &'static Currency = &Currency {
+pub const XCD: Currency = Currency {
     exponent: 2,
     code: "XCD",
     locale: EnUs,
@@ -1477,7 +1477,7 @@ pub const XCD: &'static Currency = &Currency {
     symbol: "$",
     symbol_first: true,
 };
-pub const XDR: &'static Currency = &Currency {
+pub const XDR: Currency = Currency {
     exponent: 0,
     code: "XDR",
     locale: EnUs,
@@ -1486,7 +1486,7 @@ pub const XDR: &'static Currency = &Currency {
     symbol: "SDR",
     symbol_first: false,
 };
-pub const XOF: &'static Currency = &Currency {
+pub const XOF: Currency = Currency {
     exponent: 0,
     code: "XOF",
     locale: EnUs,
@@ -1495,7 +1495,7 @@ pub const XOF: &'static Currency = &Currency {
     symbol: "Fr",
     symbol_first: false,
 };
-pub const XPD: &'static Currency = &Currency {
+pub const XPD: Currency = Currency {
     exponent: 0,
     code: "XPD",
     locale: EnUs,
@@ -1504,7 +1504,7 @@ pub const XPD: &'static Currency = &Currency {
     symbol: "oz t",
     symbol_first: false,
 };
-pub const XPF: &'static Currency = &Currency {
+pub const XPF: Currency = Currency {
     exponent: 0,
     code: "XPF",
     locale: EnUs,
@@ -1513,7 +1513,7 @@ pub const XPF: &'static Currency = &Currency {
     symbol: "Fr",
     symbol_first: false,
 };
-pub const XPT: &'static Currency = &Currency {
+pub const XPT: Currency = Currency {
     exponent: 0,
     code: "XPT",
     locale: EnUs,
@@ -1522,7 +1522,7 @@ pub const XPT: &'static Currency = &Currency {
     symbol: "oz t",
     symbol_first: false,
 };
-pub const XTS: &'static Currency = &Currency {
+pub const XTS: Currency = Currency {
     exponent: 0,
     code: "XTS",
     locale: EnUs,
@@ -1531,7 +1531,7 @@ pub const XTS: &'static Currency = &Currency {
     symbol: "oz t",
     symbol_first: false,
 };
-pub const YER: &'static Currency = &Currency {
+pub const YER: Currency = Currency {
     exponent: 2,
     code: "YER",
     locale: EnUs,
@@ -1540,7 +1540,7 @@ pub const YER: &'static Currency = &Currency {
     symbol: "﷼",
     symbol_first: false,
 };
-pub const ZAR: &'static Currency = &Currency {
+pub const ZAR: Currency = Currency {
     exponent: 2,
     code: "ZAR",
     locale: EnUs,
@@ -1549,7 +1549,7 @@ pub const ZAR: &'static Currency = &Currency {
     symbol: "R",
     symbol_first: true,
 };
-pub const ZMK: &'static Currency = &Currency {
+pub const ZMK: Currency = Currency {
     exponent: 2,
     code: "ZMK",
     locale: EnUs,
@@ -1558,7 +1558,7 @@ pub const ZMK: &'static Currency = &Currency {
     symbol: "ZK",
     symbol_first: false,
 };
-pub const ZMW: &'static Currency = &Currency {
+pub const ZMW: Currency = Currency {
     exponent: 2,
     code: "ZMW",
     locale: EnUs,
@@ -1567,7 +1567,7 @@ pub const ZMW: &'static Currency = &Currency {
     symbol: "K",
     symbol_first: true,
 };
-pub const ZWL: &'static Currency = &Currency {
+pub const ZWL: Currency = Currency {
     exponent: 2,
     code: "ZWL",
     locale: EnUs,

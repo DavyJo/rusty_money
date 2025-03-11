@@ -45,7 +45,7 @@ impl Ord for Currency {
     }
 }
 
-impl<'a> Sum for Money<'a> {
+impl Sum for Money {
     fn sum<I: Iterator<Item = Self>>(mut iter: I) -> Self {
         if let Some(first) = iter.next() {
             iter.fold(first, |acc, money| acc + money)
@@ -98,7 +98,7 @@ impl fmt::Display for Currency {
 }
 
 /// Lookup über match (perfekte Kompilierzeit-Optimierung)
-pub fn find_currency(code: &str) -> Option<&Currency> {
+pub fn find_currency(code: &str) -> Option<Currency> {
     match code {
         "AED" => Some(AED),
         "AFN" => Some(AFN),
@@ -325,7 +325,7 @@ mod tests {
         let total: Money = monies.into_iter().sum();
 
         assert_eq!(total.amount(), &Decimal::from_str("60.6").unwrap());
-        assert_eq!(total.currency(), USD);
+        assert_eq!(total.currency(), &USD);
     }
 
     #[test]

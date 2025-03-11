@@ -1,7 +1,7 @@
 use crate::Currency;
 use crate::Locale::EnUs;
 
-pub const BTC: &'static Currency = &Currency {
+pub const BTC: Currency = Currency {
     exponent: 8,
     code: "BTC",
     locale: EnUs,
@@ -10,7 +10,7 @@ pub const BTC: &'static Currency = &Currency {
     symbol: "₿",
     symbol_first: true,
 };
-pub const COMP: &'static Currency = &Currency {
+pub const COMP: Currency = Currency {
     exponent: 18,
     code: "COMP",
     locale: EnUs,
@@ -19,7 +19,7 @@ pub const COMP: &'static Currency = &Currency {
     symbol: "COMP",
     symbol_first: false,
 };
-pub const DAI: &'static Currency = &Currency {
+pub const DAI: Currency = Currency {
     exponent: 18,
     code: "DAI",
     locale: EnUs,
@@ -28,7 +28,7 @@ pub const DAI: &'static Currency = &Currency {
     symbol: "DAI",
     symbol_first: false,
 };
-pub const ETH: &'static Currency = &Currency {
+pub const ETH: Currency = Currency {
     exponent: 18,
     code: "ETH",
     locale: EnUs,
@@ -37,7 +37,7 @@ pub const ETH: &'static Currency = &Currency {
     symbol: "ETH",
     symbol_first: false,
 };
-pub const MKR: &'static Currency = &Currency {
+pub const MKR: Currency = Currency {
     exponent: 18,
     code: "MKR",
     locale: EnUs,
@@ -46,7 +46,7 @@ pub const MKR: &'static Currency = &Currency {
     symbol: "MKR",
     symbol_first: false,
 };
-pub const UNI: &'static Currency = &Currency {
+pub const UNI: Currency = Currency {
     exponent: 18,
     code: "UNI",
     locale: EnUs,
@@ -55,7 +55,7 @@ pub const UNI: &'static Currency = &Currency {
     symbol: "UNI",
     symbol_first: false,
 };
-pub const USDC: &'static Currency = &Currency {
+pub const USDC: Currency = Currency {
     exponent: 6,
     code: "USDC",
     locale: EnUs,
@@ -64,7 +64,7 @@ pub const USDC: &'static Currency = &Currency {
     symbol: "USDC",
     symbol_first: false,
 };
-pub const USDT: &'static Currency = &Currency {
+pub const USDT: Currency = Currency {
     exponent: 6,
     code: "USDT",
     locale: EnUs,
@@ -73,7 +73,7 @@ pub const USDT: &'static Currency = &Currency {
     symbol: "USDT",
     symbol_first: false,
 };
-pub const XTZ: &'static Currency = &Currency {
+pub const XTZ: Currency = Currency {
     exponent: 6,
     code: "XTZ",
     locale: EnUs,
@@ -82,7 +82,7 @@ pub const XTZ: &'static Currency = &Currency {
     symbol: "XTZ",
     symbol_first: false,
 };
-pub const ZEC: &'static Currency = &Currency {
+pub const ZEC: Currency = Currency {
     exponent: 8,
     code: "ZEC",
     locale: EnUs,
@@ -91,7 +91,7 @@ pub const ZEC: &'static Currency = &Currency {
     symbol: "ZEC",
     symbol_first: false,
 };
-pub const BCH: &'static Currency = &Currency {
+pub const BCH: Currency = Currency {
     exponent: 8,
     code: "BCH",
     locale: EnUs,
@@ -100,7 +100,7 @@ pub const BCH: &'static Currency = &Currency {
     symbol: "BCH",
     symbol_first: false,
 };
-pub const BSV: &'static Currency = &Currency {
+pub const BSV: Currency = Currency {
     exponent: 8,
     code: "BSV",
     locale: EnUs,

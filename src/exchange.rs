@@ -4,25 +4,25 @@ use std::collections::HashMap;
 
 /// Stores `ExchangeRate`s for easier access.
 #[derive(Debug, Default)]
-pub struct Exchange<'a> {
-    map: HashMap<String, ExchangeRate<'a>>,
+pub struct Exchange {
+    map: HashMap<String, ExchangeRate>,
 }
 
-impl<'a> Exchange<'a> {
-    pub fn new() -> Exchange<'a> {
+impl Exchange {
+    pub fn new() -> Exchange {
         Exchange {
             map: HashMap::new(),
         }
     }
 
     /// Update an ExchangeRate or add it if does not exist.
-    pub fn set_rate(&mut self, rate: &ExchangeRate<'a>) {
-        let key = Exchange::generate_key(rate.from, rate.to);
+    pub fn set_rate(&mut self, rate: &ExchangeRate) {
+        let key = Exchange::generate_key(&rate.from, &rate.to);
         self.map.insert(key, *rate);
     }
 
     /// Return the ExchangeRate given the currency pair.
-    pub fn get_rate(&self, from: &Currency, to: &Currency) -> Option<ExchangeRate<'a>> {
+    pub fn get_rate(&self, from: &Currency, to: &Currency) -> Option<ExchangeRate> {
         let key = Exchange::generate_key(from, to);
         self.map.get(&key).copied()
     }
@@ -34,14 +34,14 @@ impl<'a> Exchange<'a> {
 
 /// Stores rates of conversion between two currencies.
 #[derive(Debug, PartialEq, Copy, Clone)]
-pub struct ExchangeRate<'a> {
-    pub from: &'a Currency,
-    pub to: &'a Currency,
+pub struct ExchangeRate {
+    pub from: Currency,
+    pub to: Currency,
     rate: Decimal,
 }
 
-impl<'a> ExchangeRate<'a> {
-    pub fn new(from: &'a Currency, to: &'a Currency, rate: Decimal) -> Result<ExchangeRate<'a>, MoneyError> {
+impl ExchangeRate {
+    pub fn new(from: Currency, to: Currency, rate: Decimal) -> Result<ExchangeRate, MoneyError> {
         if from == to {
             return Err(MoneyError::InvalidCurrency);
         }
@@ -49,8 +49,8 @@ impl<'a> ExchangeRate<'a> {
     }
 
     /// Converts a Money from one Currency to another using the exchange rate.
-    pub fn convert(&self, amount: &Money<'a>) -> Result<Money<'a>, MoneyError> {
-        if amount.currency() != self.from {
+    pub fn convert(&self, amount: &Money) -> Result<Money, MoneyError> {
+        if amount.currency() != &self.from {
             return Err(MoneyError::InvalidCurrency);
         }
         let converted_amount = amount.amount() * self.rate;
@@ -78,10 +78,10 @@ mod tests {
         exchange.set_rate(&eur_usd_rate);
         exchange.set_rate(&eur_gbp_rate);
 
-        let fetched_rate = exchange.get_rate(usd, eur).unwrap();
+        let fetched_rate = exchange.get_rate(&usd, &eur).unwrap();
         assert_eq!(fetched_rate.rate, dec!(1.5));
 
-        let fetched_rate = exchange.get_rate(usd, gbp).unwrap();
+        let fetched_rate = exchange.get_rate(&usd, &gbp).unwrap();
         assert_eq!(fetched_rate.rate, dec!(1.6));
     }
 
