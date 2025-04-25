@@ -1,6 +1,6 @@
 [package]
 name = "rusty-money"
-version = "0.4.21"
+version = "0.4.22"
 authors = ["Varun Srinivasan <varunsrin@gmail.com>"]
 edition = "2021"
 license = "MIT"
@@ -14,8 +14,8 @@ keywords = ["money", "currency", "iso-4217", "crypto", "cryptocurrency"]
 categories = ["data-structures", "rust-patterns", "cryptography::cryptocurrencies"]
 
 [dependencies]
-rust_decimal = { default-features = false, version = "1.36.0" }
-serde = { version = "1.0.218", features = ["derive"] }
+rust_decimal = { default-features = false, version = "1.37.1", features = ["serde"] }
+serde = { version = "1.0.219", features = ["derive"] }
 
 [dev-dependencies]
-rust_decimal_macros = "1.36.0"
+rust_decimal_macros = "1.37.1"

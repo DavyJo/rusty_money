@@ -1,7 +1,7 @@
 use crate::currency::FormattableCurrency;
 use crate::format::{Formatter, Params, Position};
 use crate::locale::LocalFormat;
-use crate::{Currency, MoneyError};
+use crate::{find_currency, Currency, MoneyError};
 
 use std::cmp::Ordering;
 use std::fmt;
@@ -9,6 +9,8 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssi
 use std::str::FromStr;
 
 use rust_decimal::Decimal;
+use serde::{de, Deserialize, Deserializer, Serialize, Serializer};
+use serde::de::Visitor;
 
 /// Represents an amount of a given currency.
 ///
@@ -21,7 +23,53 @@ pub struct Money {
     currency: Currency,
 }
 
-impl<'a> Add for Money {
+impl Serialize for Money {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        // Wir serialisieren als zweigliedriges Tupel: (amount, currency_code)
+        (&self.amount, self.currency.code()).serialize(serializer)
+    }
+}
+
+impl<'de> Deserialize<'de> for Money {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        // Erwartet dieselbe Struktur wie in `serialize`
+        struct MoneyVisitor;
+
+        impl<'de> Visitor<'de> for MoneyVisitor {
+            type Value = Money;
+
+            fn expecting(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                write!(f, "a tuple (Decimal, ISO currency code)")
+            }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Money, A::Error>
+            where
+                A: serde::de::SeqAccess<'de>,
+            {
+                let amount: Decimal =
+                    seq.next_element()?.ok_or_else(|| de::Error::invalid_length(0, &self))?;
+                let code: String =
+                    seq.next_element()?.ok_or_else(|| de::Error::invalid_length(1, &self))?;
+
+                let currency = find_currency(&code)
+                    .ok_or_else(|| de::Error::custom(format!("unknown currency {}", code)))?;
+
+                Ok(Money { amount, currency })
+            }
+        }
+
+        deserializer.deserialize_seq(MoneyVisitor)
+    }
+}
+
+
+impl Add for Money {
     type Output = Money;
     fn add(self, other: Money) -> Money {
         if self.currency != other.currency {
@@ -31,7 +79,7 @@ impl<'a> Add for Money {
     }
 }
 
-impl<'a> AddAssign for Money {
+impl AddAssign for Money {
     fn add_assign(&mut self, other: Self) {
         if self.currency != other.currency {
             panic!();
@@ -43,7 +91,7 @@ impl<'a> AddAssign for Money {
     }
 }
 
-impl<'a> Sub for Money {
+impl Sub for Money {
     type Output = Money;
     fn sub(self, other: Money) -> Money {
         if self.currency != other.currency {
@@ -53,7 +101,7 @@ impl<'a> Sub for Money {
     }
 }
 
-impl<'a> SubAssign for Money {
+impl SubAssign for Money {
     fn sub_assign(&mut self, other: Self) {
         if self.currency != other.currency {
             panic!();
@@ -66,7 +114,7 @@ impl<'a> SubAssign for Money {
     }
 }
 
-impl<'a> Neg for Money {
+impl Neg for Money {
     type Output = Money;
 
     fn neg(self) -> Self::Output {
@@ -79,7 +127,7 @@ impl<'a> Neg for Money {
 
 macro_rules! impl_mul_div {
     ($type:ty) => {
-        impl<'a> Mul<$type> for Money {
+        impl Mul<$type> for Money {
             type Output = Money;
 
             fn mul(self, rhs: $type) -> Money {
@@ -88,7 +136,7 @@ macro_rules! impl_mul_div {
             }
         }
 
-        impl<'a> Mul<Money> for $type {
+        impl Mul<Money> for $type {
             type Output = Money;
 
             fn mul(self, rhs: Money) -> Money {
@@ -97,7 +145,7 @@ macro_rules! impl_mul_div {
             }
         }
 
-        impl<'a> MulAssign<$type> for Money {
+        impl MulAssign<$type> for Money {
             fn mul_assign(&mut self, rhs: $type) {
                 *self = Self {
                     amount: self.amount * Decimal::from(rhs),
@@ -106,7 +154,7 @@ macro_rules! impl_mul_div {
             }
         }
 
-        impl<'a> Div<$type> for Money {
+        impl Div<$type> for Money {
             type Output = Money;
 
             fn div(self, rhs: $type) -> Money {
@@ -115,7 +163,7 @@ macro_rules! impl_mul_div {
             }
         }
 
-        impl<'a> Div<Money> for $type {
+        impl Div<Money> for $type {
             type Output = Money;
 
             fn div(self, rhs: Money) -> Money {
@@ -124,7 +172,7 @@ macro_rules! impl_mul_div {
             }
         }
 
-        impl<'a> DivAssign<$type> for Money {
+        impl DivAssign<$type> for Money {
             fn div_assign(&mut self, rhs: $type) {
                 *self = Self {
                     amount: self.amount / Decimal::from(rhs),
@@ -147,13 +195,13 @@ impl_mul_div!(u32);
 impl_mul_div!(u64);
 impl_mul_div!(Decimal);
 
-impl<'a> PartialOrd for Money {
+impl PartialOrd for Money {
     fn partial_cmp(&self, other: &Money) -> Option<Ordering> {
         Some(self.cmp(other))
     }
 }
 
-impl<'a> Ord for Money {
+impl Ord for Money {
     fn cmp(&self, other: &Money) -> Ordering {
         if self.currency != other.currency {
             panic!();
@@ -162,7 +210,7 @@ impl<'a> Ord for Money {
     }
 }
 
-impl<'a> Money {
+impl Money {
     /// Creates a Money object given an amount string and a currency str.
     ///
     /// Supports fuzzy amount strings like "100", "100.00" and "-100.00"
@@ -333,7 +381,7 @@ pub enum Round {
     HalfEven,
 }
 
-impl<'a> fmt::Display for Money {
+impl fmt::Display for Money {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let currency = self.currency;
         let format = LocalFormat::from_locale(currency.locale());

@@ -3,6 +3,7 @@ use crate::{Locale, Money};
 use std::cmp::Ordering;
 use std::fmt;
 use std::iter::Sum;
+use serde::{Deserialize, Serialize};
 
 /// Pre-requisite for a Currency to be accepted by a Money.
 pub trait FormattableCurrency: PartialEq + Eq + Copy {
@@ -17,7 +18,7 @@ pub trait FormattableCurrency: PartialEq + Eq + Copy {
     fn symbol_first(&self) -> bool;
 }
 
-#[derive(Debug, Eq, Clone, Copy, Hash)]
+#[derive(Debug, Eq, Clone, Copy, Hash, Serialize, Deserialize)]
 pub struct Currency {
     pub code: &'static str,
     pub exponent: u32,
