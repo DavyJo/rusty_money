@@ -18,13 +18,15 @@ impl Exchange {
     /// Update an ExchangeRate or add it if does not exist.
     pub fn set_rate(&mut self, rate: &ExchangeRate) {
         let key = Exchange::generate_key(&rate.from, &rate.to);
-        self.map.insert(key, *rate);
+        // Clone the rate since ExchangeRate is not Copy
+        self.map.insert(key, rate.clone());
     }
 
     /// Return the ExchangeRate given the currency pair.
     pub fn get_rate(&self, from: &Currency, to: &Currency) -> Option<ExchangeRate> {
         let key = Exchange::generate_key(from, to);
-        self.map.get(&key).copied()
+        // Use cloned() instead of copied() as ExchangeRate is not Copy
+        self.map.get(&key).cloned()
     }
 
     fn generate_key(from: &Currency, to: &Currency) -> String {
@@ -33,7 +35,7 @@ impl Exchange {
 }
 
 /// Stores rates of conversion between two currencies.
-#[derive(Debug, PartialEq, Copy, Clone)]
+#[derive(Debug, PartialEq, Clone)] // Removed Copy
 pub struct ExchangeRate {
     pub from: Currency,
     pub to: Currency,
@@ -54,7 +56,8 @@ impl ExchangeRate {
             return Err(MoneyError::InvalidCurrency);
         }
         let converted_amount = amount.amount() * self.rate;
-        Ok(Money::from_decimal(converted_amount, self.to))
+        // Clone self.to as Money::from_decimal takes Currency by value
+        Ok(Money::from_decimal(converted_amount, self.to.clone()))
     }
 }
 
@@ -71,8 +74,9 @@ mod tests {
         let eur = find_currency("EUR").unwrap();
         let gbp = find_currency("GBP").unwrap();
 
-        let eur_usd_rate = ExchangeRate::new(usd, eur, dec!(1.5)).unwrap();
-        let eur_gbp_rate = ExchangeRate::new(usd, gbp, dec!(1.6)).unwrap();
+        // Clone the currency references when calling ExchangeRate::new
+        let eur_usd_rate = ExchangeRate::new(usd.clone(), eur.clone(), dec!(1.5)).unwrap();
+        let eur_gbp_rate = ExchangeRate::new(usd.clone(), gbp.clone(), dec!(1.6)).unwrap();
 
         let mut exchange = Exchange::new();
         exchange.set_rate(&eur_usd_rate);

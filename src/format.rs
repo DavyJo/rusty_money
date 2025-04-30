@@ -1,17 +1,66 @@
-use crate::{Money, Round};
+use crate::Money; // Removed Round from here
 use std::cmp::Ordering;
 
 /// Converts Money objects into human readable strings.
+///
+/// The `Formatter` provides a flexible and configurable way to format Money objects
+/// for display purposes, handling various locale-specific formatting requirements
+/// such as digit grouping, symbol placement, and rounding.
+///
+/// # Rounding Behavior
+///
+/// When rounding is specified in the `Params`, the `Formatter` uses the
+/// `MidpointNearestEven` rounding strategy (also known as "banker's rounding").
+/// This strategy rounds to the nearest value and to the even digit if equidistant.
+///
+/// Examples of `MidpointNearestEven` rounding to 2 decimal places:
+/// - 1.225 → 1.22 (rounds down because 2 is even)
+/// - 1.235 → 1.24 (rounds up because 4 is even)
+/// - 1.245 → 1.24 (rounds down because 4 is even)
+/// - 1.255 → 1.26 (rounds up because 6 is even)
+///
+/// Note that this differs from the rounding used in `Money::fmt` (Display trait),
+/// which uses `MidpointAwayFromZero` (commercial rounding).
 pub struct Formatter;
 
 impl Formatter {
     /// Returns a formatted Money String given parameters and a Money object.
+    ///
+    /// This method applies the specified formatting parameters to the Money object,
+    /// including digit grouping, symbol placement, and optional rounding.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rusty_money::{Money, Formatter, Params, Position};
+    /// use rusty_money::currencies::iso::USD;
+    /// use rust_decimal_macros::dec;
+    ///
+    /// let money = Money::from_decimal(dec!(1234.56), USD);
+    ///
+    /// // Custom formatting with specific parameters
+    /// let params = Params {
+    ///     symbol: Some("$"),
+    ///     positions: vec![Position::Symbol, Position::Amount],
+    ///     rounding: Some(1), // Round to 1 decimal place
+    ///     ..Default::default()
+    /// };
+    ///
+    /// assert_eq!("$1,234.6", Formatter::money(&money, params));
+    /// ```
+    ///
+    /// # Panics
+    ///
+    /// This method will panic if the input decimal representation contains more
+    /// than one decimal point (exponent separator), which should never occur with
+    /// a valid `Decimal` value from a `Money` object.
     pub fn money(money: &Money, params: Params) -> String {
         let mut decimal = *money.amount();
 
-        // Round the decimal
+        // Round the decimal using MidpointNearestEven (equivalent to the old HalfEven)
         if let Some(x) = params.rounding {
-            decimal = *money.round(x, Round::HalfEven).amount();
+             // Use the imported RoundingStrategy enum
+            decimal = *money.round(x, rust_decimal::RoundingStrategy::MidpointNearestEven).amount();
         }
 
         // Format the Amount String
@@ -89,21 +138,48 @@ pub enum Position {
 }
 
 /// Group of formatting parameters consumed by `Formatter`.
+///
+/// The `Params` struct allows fine-grained control over how Money values
+/// are formatted, including digit grouping, decimal representation,
+/// symbol placement, and rounding behavior.
 #[derive(Debug, Clone)]
 pub struct Params {
-    /// The character that separates grouped digits (e.g. 1,000,000)
+    /// The character that separates grouped digits (e.g., 1,000,000 uses ',' as the separator)
     pub digit_separator: char,
-    /// The character that separates minor units from major units (e.g. 1,000.00)
+    
+    /// The character that separates major units from minor units (e.g., 1,000.00 uses '.' as the separator)
     pub exponent_separator: char,
-    /// The grouping pattern that is applied to digits / major units (e.g. 1,000,000 vs 1,00,000)
+    
+    /// The grouping pattern applied to digits/major units
+    ///
+    /// For standard grouping like 1,000,000, use [3, 3, 3]
+    /// For Indian grouping like 1,00,00,000, use [3, 2, 2]
     pub separator_pattern: Vec<usize>,
-    /// The relative positions of the elements in a currency string (e.g. -$1,000 vs $ -1,000)
+    
+    /// The relative positions of the elements in a currency string
+    ///
+    /// This determines the order of elements like:
+    /// - "-$1,000" (Sign, Symbol, Amount)
+    /// - "$ -1,000" (Symbol, Space, Sign, Amount)
+    /// - "1,000$" (Amount, Symbol)
     pub positions: Vec<Position>,
-    /// The number of minor unit digits should remain after Round::HalfEven is applied.
+    
+    /// The number of decimal places to round to using `MidpointNearestEven` rounding
+    ///
+    /// When `Some(n)`, the amount will be rounded to `n` decimal places using banker's rounding.
+    /// When `None`, no rounding is performed (all decimal places are preserved).
+    ///
+    /// Examples with `rounding: Some(2)`:
+    /// - 10.005 → 10.00
+    /// - 10.015 → 10.02
+    /// - 10.025 → 10.02
+    /// - 10.035 → 10.04
     pub rounding: Option<u32>,
-    /// The symbol of the currency (e.g. $)
+    
+    /// The symbol of the currency (e.g., "$", "€", "£")
     pub symbol: Option<&'static str>,
-    /// The currency's ISO code (e.g. USD)
+    
+    /// The currency's ISO code (e.g., "USD", "EUR", "GBP")
     pub code: Option<&'static str>,
 }
 

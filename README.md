@@ -67,18 +67,33 @@ precision, you call the `round` function, which  supports three modes:
 Money can be added, subtracted, multiplied and divided like this:
 
 ```rust
-use rusty_money::{Money, Round};
+use rusty_money::Money;
 use rusty_money::currencies::iso;
+use rust_decimal::RoundingStrategy; // Import the rounding strategy
 
-Money::from_minor(100, iso::USD) + Money::from_minor(100, iso::USD);  // 2 USD
-Money::from_minor(100, iso::USD) - Money::from_minor(100, iso::USD);  // 0 USD
-Money::from_minor(100, iso::USD) * 3;                                 // 3 USD
-Money::from_minor(100, iso::USD) / 3;                                 // 0.333... USD
+// Addition and Subtraction now return Result
+let sum = Money::from_minor(100, iso::USD) + Money::from_minor(100, iso::USD);  // Ok(2 USD)
+assert_eq!(sum.unwrap(), Money::from_minor(200, iso::USD));
+let diff = Money::from_minor(100, iso::USD) - Money::from_minor(100, iso::USD); // Ok(0 USD)
+assert_eq!(diff.unwrap(), Money::from_minor(0, iso::USD));
 
-let usd = Money::from_str("-2000.005", iso::USD).unwrap();            // 2000.005 USD
-usd.round(2, Round::HalfEven);                                        // 2000.00 USD
-usd.round(2, Round::HalfUp);                                          // 2000.01 USD
-usd.round(0, Round::HalfUp);                                          // 2000 USD
+// Multiplication and Division still return Money (panic on division by zero)
+let product = Money::from_minor(100, iso::USD) * 3;                           // 3 USD
+assert_eq!(product, Money::from_minor(300, iso::USD));
+let quotient = Money::from_minor(100, iso::USD) / 3;                          // 0.333... USD
+// Note: quotient amount is Decimal(33.333...) which might not be directly representable as minor units
+
+// Use FromStr trait to parse a money string with amount and currency code
+let usd = "2000.005 USD".parse::<Money>().unwrap();                           // 2000.005 USD
+// Or with a negative amount - notice format is "AMOUNT CURRENCY"
+let neg_usd = "-2000.005 USD".parse::<Money>().unwrap();                      // -2000.005 USD
+// Use RoundingStrategy directly for rounding
+let r1 = usd.round(2, RoundingStrategy::MidpointNearestEven);                 // 2000.00 USD
+assert_eq!(r1, Money::from_minor(200000, iso::USD));
+let r2 = usd.round(2, RoundingStrategy::MidpointAwayFromZero);                // 2000.01 USD
+assert_eq!(r2, Money::from_minor(200001, iso::USD));
+let r3 = usd.round(0, RoundingStrategy::MidpointAwayFromZero);                // 2000 USD
+assert_eq!(r3, Money::from_minor(200000, iso::USD));
 ```
 
 ## Formatting
@@ -90,11 +105,13 @@ accepts a more detailed set of parameters.
 ```rust
 use rusty_money::Money;
 use rusty_money::currencies::iso;
-let usd = Money::from_str("-2000.009", iso::USD).unwrap();
-let eur = Money::from_str("-2000.009", iso::EUR).unwrap();
+use std::str::FromStr;
+
+let usd = "-2000.009 USD".parse::<Money>().unwrap();
+let eur = "-2000.009 EUR".parse::<Money>().unwrap();
 
 println!("{}", usd);                                        // -$2,000.01
-println!("{}", eur);                                        // -€2.000,01;
+println!("{}", eur);                                        // -€2.000,01
 ```
 
 ## Exchange

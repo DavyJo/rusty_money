@@ -1,0 +1,156 @@
+{
+  "EnUs": {
+    "digit_separator": ",",
+    "exponent_separator": "E",
+    "grouping": 3,
+    "infinity_symbol": "inf",
+    "minus_sign_symbol": "-",
+    "nan_symbol": "NaN",
+    "separator_pattern": [3],
+    "symbol_first": true,
+    "symbol_spacing": false
+  },
+  "EnEu": {
+    "digit_separator": ".",
+    "exponent_separator": "E",
+    "grouping": 3,
+    "infinity_symbol": "inf",
+    "minus_sign_symbol": "-",
+    "nan_symbol": "NaN",
+    "separator_pattern": [3],
+    "symbol_first": false,
+    "symbol_spacing": true
+  },
+  "FrFr": {
+    "digit_separator": ",",
+    "exponent_separator": "E",
+    "grouping": 3,
+    "infinity_symbol": "inf",
+    "minus_sign_symbol": "-",
+    "nan_symbol": "NaN",
+    "separator_pattern": [3],
+    "symbol_first": false,
+    "symbol_spacing": true
+  },
+  "EnIn": {
+    "digit_separator": ".",
+    "exponent_separator": "E",
+    "grouping": 3,
+    "infinity_symbol": "inf",
+    "minus_sign_symbol": "-",
+    "nan_symbol": "NaN",
+    "separator_pattern": [3, 2],
+    "symbol_first": true,
+    "symbol_spacing": false
+  },
+  "EnAu": {
+    "digit_separator": ",",
+    "exponent_separator": "E",
+    "grouping": 3,
+    "infinity_symbol": "inf",
+    "minus_sign_symbol": "-",
+    "nan_symbol": "NaN",
+    "separator_pattern": [3],
+    "symbol_first": true,
+    "symbol_spacing": false
+  },
+  "EnCa": {
+    "digit_separator": ",",
+    "exponent_separator": "E",
+    "grouping": 3,
+    "infinity_symbol": "inf",
+    "minus_sign_symbol": "-",
+    "nan_symbol": "NaN",
+    "separator_pattern": [3],
+    "symbol_first": true,
+    "symbol_spacing": false
+  },
+  "EnGb": {
+    "digit_separator": ".",
+    "exponent_separator": "E",
+    "grouping": 3,
+    "infinity_symbol": "inf",
+    "minus_sign_symbol": "-",
+    "nan_symbol": "NaN",
+    "separator_pattern": [3],
+    "symbol_first": true,
+    "symbol_spacing": false
+  },
+  "EnNa": {
+    "digit_separator": ",",
+    "exponent_separator": "E",
+    "grouping": 3,
+    "infinity_symbol": "inf",
+    "minus_sign_symbol": "-",
+    "nan_symbol": "NaN",
+    "separator_pattern": [3],
+    "symbol_first": true,
+    "symbol_spacing": false
+  },
+  "EnNg": {
+    "digit_separator": ",",
+    "exponent_separator": "E",
+    "grouping": 3,
+    "infinity_symbol": "inf",
+    "minus_sign_symbol": "-",
+    "nan_symbol": "NaN",
+    "separator_pattern": [3],
+    "symbol_first": true,
+    "symbol_spacing": false
+  },
+  "EnPh": {
+    "digit_separator": ".",
+    "exponent_separator": "E",
+    "grouping": 3,
+    "infinity_symbol": "inf",
+    "minus_sign_symbol": "-",
+    "nan_symbol": "NaN",
+    "separator_pattern": [3],
+    "symbol_first": true,
+    "symbol_spacing": false
+  },
+  "EnZa": {
+    "digit_separator": ",",
+    "exponent_separator": "E",
+    "grouping": 3,
+    "infinity_symbol": "inf",
+    "minus_sign_symbol": "-",
+    "nan_symbol": "NaN",
+    "separator_pattern": [3],
+    "symbol_first": true,
+    "symbol_spacing": false
+  },
+  "EsEs": {
+    "digit_separator": ",",
+    "exponent_separator": "E",
+    "grouping": 3,
+    "infinity_symbol": "inf",
+    "minus_sign_symbol": "-",
+    "nan_symbol": "NaN",
+    "separator_pattern": [3],
+    "symbol_first": false,
+    "symbol_spacing": true
+  },
+  "FrCa": {
+    "digit_separator": ",",
+    "exponent_separator": "E",
+    "grouping": 3,
+    "infinity_symbol": "inf",
+    "minus_sign_symbol": "-",
+    "nan_symbol": "NaN",
+    "separator_pattern": [3],
+    "symbol_first": false,
+    "symbol_spacing": true
+  },
+  "RuRu": {
+    "digit_separator": ",",
+    "exponent_separator": "E",
+    "grouping": 3,
+    "infinity_symbol": "inf",
+    "minus_sign_symbol": "-",
+    "nan_symbol": "NaN",
+    "separator_pattern": [3],
+    "symbol_first": false,
+    "symbol_spacing": true
+  }
+}
