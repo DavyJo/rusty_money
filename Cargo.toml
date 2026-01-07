@@ -1,6 +1,6 @@
 [package]
 name = "rusty-money"
-version = "0.5.1" # Bump version for breaking changes & features
+version = "0.5.2" # Bump version for breaking changes & features
 authors = ["David Geib <davidjgeib@gmail.com>"]
 edition = "2021"
 license = "MIT"
