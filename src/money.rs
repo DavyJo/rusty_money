@@ -241,7 +241,7 @@ macro_rules! impl_mul_div {
             /// use rusty_money::currencies::iso::USD;
             ///
             /// let money = Money::from_major(10, USD);
-            /// let doubled = money * 2;
+            /// let doubled: Money = money * 2;
             /// assert_eq!(doubled.to_string(), "$20.00");
             /// ```
             fn mul(self, rhs: $type) -> Money {
@@ -264,7 +264,7 @@ macro_rules! impl_mul_div {
             /// use rusty_money::currencies::iso::USD;
             ///
             /// let money = Money::from_major(10, USD);
-            /// let doubled = 2 * money;
+            /// let doubled: Money = 2 * money;
             /// assert_eq!(doubled.to_string(), "$20.00");
             /// ```
             fn mul(self, rhs: Money) -> Money {
@@ -306,7 +306,7 @@ macro_rules! impl_mul_div {
             /// use rusty_money::currencies::iso::USD;
             ///
             /// let money = Money::from_major(10, USD);
-            /// let halved = money / 2;
+            /// let halved: Money = money / 2;
             /// assert_eq!(halved.to_string(), "$5.00");
             /// ```
             ///
@@ -334,7 +334,7 @@ macro_rules! impl_mul_div {
             ///
             /// // 100 / $20 = 5 (same currency as the Money operand)
             /// let money = Money::from_major(20, USD);
-            /// let result = 100 / money;
+            /// let result: Money = 100 / money;
             /// assert_eq!(result.to_string(), "$5.00");
             /// ```
             ///
@@ -613,48 +613,51 @@ impl Money {
     /// than invalid inputs, and should never be encountered in normal operation.
     pub fn allocate(&self, ratios: Vec<i32>) -> Result<Vec<Money>, MoneyError> {
         if ratios.is_empty() {
-            return Err(MoneyError::InvalidRatio); // Check for empty ratios
+            return Err(MoneyError::InvalidRatio);
         }
 
-        // Convert i32 ratios to Decimal safely using Decimal::from()
-        let ratios: Vec<Decimal> = ratios.iter().map(|&x| Decimal::from(x)).collect();
-
-        let mut remainder = self.amount;
-        let ratio_total: Decimal = ratios.iter().fold(Decimal::ZERO, |acc, x| acc + x);
-
-        let mut allocations: Vec<Money> = Vec::new();
-
-        for ratio in ratios {
-            if ratio <= Decimal::ZERO {
-                return Err(MoneyError::InvalidRatio);
-            }
-
-            let share = (self.amount * ratio / ratio_total).floor();
-
-            allocations.push(Money::from_decimal(share, self.currency.clone())); // Clone currency
-            remainder -= share;
+        if ratios.iter().any(|&r| r <= 0) {
+             return Err(MoneyError::InvalidRatio);
         }
 
-        if remainder < Decimal::ZERO {
-            // This indicates a logic error in allocation if it happens.
-            panic!("Internal allocation error: Remainder was negative");
+        let ratio_total: i32 = ratios.iter().sum();
+        let mut shares = Vec::new();
+
+        // Use the currency's exponent to determine the smallest unit
+        // e.g., for USD (exp 2), scale is 100.
+        // We do allocation on the minor units to ensure integer math behavior for remainders.
+        let scale = Decimal::from(10u32.pow(self.currency.exponent()));
+        
+        // Convert total amount to minor units (e.g. $10.00 -> 1000 cents)
+        // We use floor to handle any sub-minor precision (truncating it for allocation)
+        let minor_amount = (self.amount * scale).floor();
+        let minor_total_ratio = Decimal::from(ratio_total);
+
+        let mut minor_remainder = minor_amount;
+        let mut minor_shares = Vec::new();
+
+        for ratio in &ratios {
+            let ratio_dec = Decimal::from(*ratio);
+            let share = (minor_amount * ratio_dec / minor_total_ratio).floor();
+            minor_shares.push(share);
+            minor_remainder -= share;
         }
 
-        // Decimal comparison handles precision correctly.
-        if remainder != remainder.floor() {
-            // This indicates a logic error in allocation if it happens.
-            panic!("Internal allocation error: Remainder is not an integer");
+        // Distribute remainder one minor unit at a time
+        let mut i = 0;
+        while minor_remainder > Decimal::ZERO {
+            minor_shares[i] += Decimal::ONE;
+            minor_remainder -= Decimal::ONE;
+            i = (i + 1) % minor_shares.len();
         }
 
-        // The original tests expect remainder distribution in whole units (ONE), not minor units
-        let mut i: usize = 0;
-        while remainder > Decimal::ZERO {
-            allocations[i].amount += Decimal::ONE;
-            remainder -= Decimal::ONE;
-            // Cycle through allocations if remainder exceeds the number of shares
-            i = (i + 1) % allocations.len();
+        // Convert back to Money
+        for share in minor_shares {
+            let amount = share / scale;
+            shares.push(Money::from_decimal(amount, self.currency.clone()));
         }
-        Ok(allocations)
+
+        Ok(shares)
     }
 
     /// Returns a new `Money` object rounded to the specified number of decimal places
@@ -1317,9 +1320,9 @@ mod tests {
         let money = Money::from_minor(1_100, USD);
         let allocated = money.allocate(vec![1, 1, 1]).unwrap();
         let expected_results = vec![
-            Money::from_minor(400, USD),
-            Money::from_minor(400, USD),
-            Money::from_minor(300, USD),
+            Money::from_minor(367, USD),
+            Money::from_minor(367, USD),
+            Money::from_minor(366, USD),
         ];
         assert_eq!(expected_results, allocated);
 
@@ -1337,9 +1340,9 @@ mod tests {
         let money = Money::from_minor(1_100, USD);
         let monies = money.allocate_to(3).unwrap();
         let expected_results = vec![
-            Money::from_minor(400, USD),
-            Money::from_minor(400, USD),
-            Money::from_minor(300, USD),
+            Money::from_minor(367, USD),
+            Money::from_minor(367, USD),
+            Money::from_minor(366, USD),
         ];
         assert_eq!(expected_results, monies);
 
